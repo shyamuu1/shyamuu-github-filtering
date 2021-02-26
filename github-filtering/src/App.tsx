@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { getRepos } from './util/apiService';
 
-function App() {
+const App:React.FC = () => {
+  const [isMounted, setIsMounted] = useState<boolean>(true);
+  useEffect(() => {
+    try{
+      if(isMounted){
+        getRepoData();
+      }else{
+        return () => {
+          setIsMounted(false);
+        }
+      }
+
+    }catch(err){
+      console.log(err.message);
+
+    }
+    
+  }, [isMounted]);
+
+
+  //Gets all repositories 
+  const getRepoData = () => {
+    getRepos()
+    .then((res) => console.log(res));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
     </div>
   );
 }
