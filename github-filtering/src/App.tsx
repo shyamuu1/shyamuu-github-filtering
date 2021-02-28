@@ -1,7 +1,8 @@
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Container} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { getRepos } from './util/apiService';
+import SearchRepos from './components/Search/Search';
+import { getRepos, getRequestWithQuery } from './util/apiService';
 
 const App:React.FC = () => {
   const [isMounted, setIsMounted] = useState<boolean>(true);
@@ -29,6 +30,11 @@ const App:React.FC = () => {
     .then((res) => console.log(res));
   }
 
+  const searchRepoHandler = (query:string) => {
+    getRequestWithQuery(query)
+    .then(res => console.log(res));
+  }
+
   return (
     <div className="App">
       <AppBar position="static">
@@ -38,6 +44,9 @@ const App:React.FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
+      <Container className="container">
+        <SearchRepos searchQuery={searchRepoHandler} />
+      </Container>
     </div>
   );
 }
