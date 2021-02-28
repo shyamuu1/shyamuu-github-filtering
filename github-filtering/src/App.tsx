@@ -1,3 +1,4 @@
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { getRepos } from './util/apiService';
@@ -30,6 +31,13 @@ const App:React.FC = () => {
 
   return (
     <div className="App">
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6">
+            Repo Query
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
