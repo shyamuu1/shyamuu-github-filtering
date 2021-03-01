@@ -3,10 +3,15 @@ export type RepoListItem = {
     name:string;
     description:string;
     language:string;
-    star_gazerscount:string;
+    stargazers_count:number;
     owner:{
         login:string;
     }
+}
+
+export type LanguageFilter = {
+    name:string;
+    active:boolean;
 }
 
 export interface RepoItemSetAction {

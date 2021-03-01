@@ -12,6 +12,7 @@ import { getRepos, getRequestWithQuery } from './util/apiService';
 const App:React.FC = () => {
   const [isMounted, setIsMounted] = useState<boolean>(true);
   const [results, setResults] = useState<RepoListItem[]>([]);
+  const [applyFilter, setApplyFilter] = useState<boolean>(false);
   
 
   console.log(results);
@@ -45,6 +46,11 @@ const App:React.FC = () => {
       console.log(data.items);
       setResults(data.items);
     });
+  }
+
+  const addFilter = (filter_name:string) => {
+    
+
   }
 
   return (

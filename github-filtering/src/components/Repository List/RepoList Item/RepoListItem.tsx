@@ -13,12 +13,12 @@ const RepoItem:React.FC<RepoItemProps>= ({repoInfo}:RepoItemProps) => {
         <Card>
             <CardHeader title={repoInfo.name} subheader={repoInfo.language} />
             <CardContent>
-                <Typography variant="body2" component="p">
+                <Typography variant="body1" component="p">
                     {(repoInfo.description === null) ? "No Description":repoInfo.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                    <Typography paragraph>Stars: {repoInfo.star_gazerscount}</Typography>
+                    <Typography paragraph>Stars: {repoInfo.stargazers_count}</Typography>
                     <Typography paragraph>Owner: {repoInfo.owner.login}</Typography>
             </CardActions>
         </Card>
