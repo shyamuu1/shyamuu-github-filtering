@@ -1,6 +1,6 @@
 import { FormControl,FormGroup, FormControlLabel, FormLabel, Checkbox, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import { LanguageFilter } from '../../util/types';
+import Filters_arr, { LanguageFilter } from '../../util/types';
 
 const useStyles = makeStyles({
     filterGroup:{
@@ -9,26 +9,22 @@ const useStyles = makeStyles({
         flexWrap:"wrap"
     }
 });
-const Default_Filters:LanguageFilter[] = [
-    {name: "Java", active:false},
-    {name: "Python", active:false},
-    {name: "JavaScript", active:false},
-    {name: "TypeScript", active:false}
-]
-
-const Filters:React.FC = () => {
-    const currentFilters:LanguageFilter[] = Default_Filters;
-    const [filters, setFilters] = useState<LanguageFilter[]>(currentFilters);
+type FilterProps = {
+    activeFilters: (currentFilters:LanguageFilter[]) => void;
+}
+const Filters:React.FC<FilterProps> = ({activeFilters}:FilterProps) => {
+    const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const styles = useStyles();
 
 
     const filterCheck = (name:string) => {
-        return currentFilters.find((f) => f.name === name) !== undefined;
+        return filters.find((f) => f.name === name) !== undefined;
     }
     
     const handleChange = (idx:number) =>{
-        currentFilters[idx].active = !currentFilters[idx].active
+        filters[idx].active = !filters[idx].active
         setFilters((filters) => [...filters]);
+        activeFilters(filters);
     }
  
     return (

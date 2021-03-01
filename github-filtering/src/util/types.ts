@@ -14,9 +14,17 @@ export type LanguageFilter = {
     active:boolean;
 }
 
+const Filters_arr:LanguageFilter[] = [
+    {name: "Java", active:false},
+    {name: "Python", active:false},
+    {name: "JavaScript", active:false},
+    {name: "TypeScript", active:false}
+]
+
 export interface RepoItemSetAction {
     type:"SET",
     repoItems:RepoListItem[]
 }
 
 export type RepoItemActionType = RepoItemSetAction;
+export default Filters_arr;

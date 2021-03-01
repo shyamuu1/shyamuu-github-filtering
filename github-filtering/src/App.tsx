@@ -3,7 +3,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import {queryReducer} from './util/reducers/queryItemReeducer';
 import './App.css';
 import Repolist from "./components/Repository List/Repolist";
-import {RepoListItem} from './util/types';
+import Filters_arr, {LanguageFilter, RepoListItem} from './util/types';
 import Filters from './components/Filters/Filters';
 import SearchRepos from './components/Search/Search';
 import { getRepos, getRequestWithQuery } from './util/apiService';
@@ -12,10 +12,9 @@ import { getRepos, getRequestWithQuery } from './util/apiService';
 const App:React.FC = () => {
   const [isMounted, setIsMounted] = useState<boolean>(true);
   const [results, setResults] = useState<RepoListItem[]>([]);
-  const [applyFilter, setApplyFilter] = useState<boolean>(false);
+  const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
   
-
-  console.log(results);
+  console.log(filters);
   useEffect(() => {
     try{
       if(isMounted){
@@ -37,7 +36,9 @@ const App:React.FC = () => {
   //Gets all repositories 
   const getRepoData = () => {
     getRepos()
-    .then((res) => console.log(res));
+    .then((res) => {
+      setResults(res.items);
+    });
   }
 
   const searchRepoHandler = (query:string) => {
@@ -46,12 +47,22 @@ const App:React.FC = () => {
       console.log(data.items);
       setResults(data.items);
     });
-  }
-
-  const addFilter = (filter_name:string) => {
     
-
   }
+
+  const getFilters = (activeFilters:LanguageFilter[]) => {
+    setFilters([...activeFilters]);
+  }
+
+  const filterData = () => {
+    const activeFilters = filters.filter((f) => f.active === true);
+    activeFilters.forEach((f) => {
+      const filtered_results = results.filter((repos) => repos.language === f.name);
+      setResults([...filtered_results])
+    })
+  }
+  let repoList = (results.length)?<Repolist RepoData={results}/>:<Typography paragraph>No Results from search</Typography>;
+
 
   return (
     <div className="App">
@@ -64,9 +75,9 @@ const App:React.FC = () => {
       </AppBar>
       <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
-        <Filters />
+        <Filters activeFilters={getFilters}/>
         <section>
-          <Repolist RepoData={results} />
+          {repoList}
         </section>
       </Container>
     </div>

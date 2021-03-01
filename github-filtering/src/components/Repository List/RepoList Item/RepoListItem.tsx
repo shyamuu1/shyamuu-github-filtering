@@ -8,7 +8,6 @@ type RepoItemProps = {
 }
 
 const RepoItem:React.FC<RepoItemProps>= ({repoInfo}:RepoItemProps) => {
-    console.log(repoInfo);
     return(
         <Card>
             <CardHeader title={repoInfo.name} subheader={repoInfo.language} />
