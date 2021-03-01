@@ -1,5 +1,5 @@
 import { FormControl,FormGroup, FormControlLabel, FormLabel, Checkbox, makeStyles } from '@material-ui/core';
-import React, { SyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { LanguageFilter } from '../../util/types';
 
 const useStyles = makeStyles({
@@ -15,20 +15,20 @@ const Default_Filters:LanguageFilter[] = [
     {name: "JavaScript", active:false},
     {name: "TypeScript", active:false}
 ]
-const Default_filter:LanguageFilter= {
-    name:"",
-    active:false
-}
+
 const Filters:React.FC = () => {
-    const [currentFilters, setFilters] = useState<LanguageFilter[]>(Default_Filters);
-    const [selectedFilter, setFilter] = useState<LanguageFilter>(Default_filter);
+    const currentFilters:LanguageFilter[] = Default_Filters;
+    const [filters, setFilters] = useState<LanguageFilter[]>(currentFilters);
     const styles = useStyles();
 
 
-    const selectFilter = (idx:number) => {
-        setFilter({...currentFilters[idx], active:!currentFilters[idx].active});
-
-        // setFilter({...selectFilter, name:filter.name, active:!filter.active});
+    const filterCheck = (name:string) => {
+        return currentFilters.find((f) => f.name === name) !== undefined;
+    }
+    
+    const handleChange = (idx:number) =>{
+        currentFilters[idx].active = !currentFilters[idx].active
+        setFilters((filters) => [...filters]);
     }
  
     return (
@@ -36,12 +36,8 @@ const Filters:React.FC = () => {
             <FormControl component="fieldset">
                 <FormLabel component="legend">Filter By:</FormLabel>
                 <FormGroup className={styles.filterGroup}>
-                    {currentFilters.map((filter, idx) => (
-                        <FormControlLabel key={idx} control={<Checkbox checked={selectedFilter?.active} name={filter.name} 
-                        onClick={(e) => {
-                            e.preventDefault()
-                            selectFilter(idx)
-                    }} />} label={filter.name}/>
+                    {filters.map((filter, idx) => (
+                        <FormControlLabel key={idx} control={<Checkbox checked={filter.active} name={filter.name} onChange={() => {handleChange(idx)}} />} label={filter.name}/>
                     ))}
                 </FormGroup>
             </FormControl>
