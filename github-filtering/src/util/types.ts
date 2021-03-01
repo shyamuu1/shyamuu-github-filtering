@@ -4,7 +4,9 @@ export type RepoListItem = {
     description:string;
     language:string;
     star_gazerscount:string;
-    owner:string;
+    owner:{
+        login:string;
+    }
 }
 
 export interface RepoItemSetAction {

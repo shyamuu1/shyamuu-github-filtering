@@ -10,18 +10,16 @@ type RepoItemProps = {
 const RepoItem:React.FC<RepoItemProps>= ({repoInfo}:RepoItemProps) => {
     console.log(repoInfo);
     return(
-        <Card key={repoInfo.node_id}>
+        <Card>
             <CardHeader title={repoInfo.name} subheader={repoInfo.language} />
             <CardContent>
-                <Typography>
-                    {repoInfo.description}
+                <Typography variant="body2" component="p">
+                    {(repoInfo.description === null) ? "No Description":repoInfo.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <CardContent>
-                    <span>Stars: {repoInfo.star_gazerscount}</span>
-                    <span>Owner: {repoInfo.owner}</span>
-                </CardContent>
+                    <Typography paragraph>Stars: {repoInfo.star_gazerscount}</Typography>
+                    <Typography paragraph>Owner: {repoInfo.owner.login}</Typography>
             </CardActions>
         </Card>
     )

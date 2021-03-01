@@ -42,6 +42,7 @@ const App:React.FC = () => {
   const searchRepoHandler = (query:string) => {
     getRequestWithQuery(query)
     .then(data => {
+      console.log(data.items);
       setResults(data.items);
     });
   }
