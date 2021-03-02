@@ -5,7 +5,7 @@ import React, {SyntheticEvent, useState} from 'react';
 const useStyles = makeStyles({
     search:{
         display:"flex",
-        paddingTop: "4px",
+        paddingTop: "8px",
         flexWrap:"wrap",
         justifyContent:"center",
         alignItems:"center"

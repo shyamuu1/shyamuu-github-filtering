@@ -6,7 +6,8 @@ const useStyles = makeStyles({
     filterGroup:{
         display:"flex",
         flexDirection:"row",
-        flexWrap:"wrap"
+        flexWrap:"wrap",
+        padding: "8px"
     }
 });
 type FilterProps = {

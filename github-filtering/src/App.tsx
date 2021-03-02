@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Typography, Container} from '@material-ui/core';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, useCallback } from 'react';
 import {queryReducer} from './util/reducers/queryItemReeducer';
 import './App.css';
 import Repolist from "./components/Repository List/Repolist";
@@ -49,19 +49,23 @@ const App:React.FC = () => {
     });
     
   }
-
-  const getFilters = (activeFilters:LanguageFilter[]) => {
-    setFilters([...activeFilters]);
-  }
-
-  const filterData = () => {
+  const filterData = useCallback(() => {
     const activeFilters = filters.filter((f) => f.active === true);
     activeFilters.forEach((f) => {
       const filtered_results = results.filter((repos) => repos.language === f.name);
       setResults([...filtered_results])
     })
-  }
+  },[results, filters])
+
+  const addFilters = useCallback((activeFilters:LanguageFilter[]) => {
+    setFilters([...activeFilters]);
+    filterData();
+  }, [filterData])
+
+  
+  
   let repoList = (results.length)?<Repolist RepoData={results}/>:<Typography paragraph>No Results from search</Typography>;
+  
 
 
   return (
@@ -75,7 +79,7 @@ const App:React.FC = () => {
       </AppBar>
       <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
-        <Filters activeFilters={getFilters}/>
+        <Filters activeFilters={addFilters}/>
         <section>
           {repoList}
         </section>
