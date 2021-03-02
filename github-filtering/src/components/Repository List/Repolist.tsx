@@ -1,11 +1,13 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { RepoListItem } from '../../util/types';
+import { LanguageFilter, RepoListItem } from '../../util/types';
 import RepoItem from "./RepoList Item/RepoListItem";
 
 type RepolistProps = {
     RepoData:RepoListItem[];
-    Filters:RepoListItem[];
+    Filters:LanguageFilter[];
+    filtered:RepoListItem[];
+
 }
 
 const useStyles = makeStyles({
@@ -22,19 +24,27 @@ const useStyles = makeStyles({
     }
 })
 
-const Repolist:React.FC<RepolistProps> = ({RepoData, Filters}:RepolistProps) => {
+const Repolist:React.FC<RepolistProps> = ({RepoData, Filters, filtered}:RepolistProps) => {
     const styles = useStyles();
-    let data = (Filters.length)? Filters:RepoData;
-    return (
-        <div className={styles.listSegment}>
-            <div className={styles.repoItems}>
-            {data.map((rInfo) =>(
-                    <RepoItem key={rInfo.node_id} repoInfo={rInfo} /> 
-            ))}
+    const activatedFilters:LanguageFilter[] = Filters.filter((f) => f.active === true);
+    let data:RepoListItem[] = (!activatedFilters.length)? RepoData:(activatedFilters.length && filtered.length)?filtered:[];
+    if(data.length){
+        return (
+            <div className={styles.listSegment}>
+                <div className={styles.repoItems}>
+                {data.map((rInfo) =>(
+                        <RepoItem key={rInfo.node_id} repoInfo={rInfo} /> 
+                ))}
+                </div>
             </div>
-        </div>
-
-    );
+    
+        );
+    }else{
+        return (
+            <Typography paragraph> No results from search</Typography>
+        )
+    }
+    
 
 }
 

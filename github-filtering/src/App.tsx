@@ -7,6 +7,8 @@ import Filters_arr, {LanguageFilter, RepoListItem} from './util/types';
 import Filters from './components/Filters/Filters';
 import SearchRepos from './components/Search/Search';
 import { getRepos, getRequestWithQuery } from './util/apiService';
+import Header from './components/Layout/Header';
+
 
 
 const App:React.FC = () => {
@@ -65,31 +67,22 @@ const App:React.FC = () => {
   }
   },[results, filters])
 
-  const addFilters = useCallback((activeFilters:LanguageFilter[]) => {
-    setFilters([...activeFilters]);
+  const addFilters = useCallback((allFilters:LanguageFilter[]) => {
+    setFilters([...allFilters]);
     filterData();
   }, [filterData])
 
-  
-  
-  let repoList = (results.length)?<Repolist RepoData={results} Filters={filterResults}/>:(filterResults.length)?<Repolist RepoData={results} Filters={filterResults}/>:<Typography paragraph>No Results from search</Typography>;
   
 
 
   return (
     <div className="App">
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">
-            Repo Query
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Header />
       <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
         <Filters activeFilters={addFilters}/>
         <section>
-          {repoList}
+        <Repolist RepoData={results} Filters={filters} filtered={filterResults}/>
         </section>
       </Container>
     </div>
