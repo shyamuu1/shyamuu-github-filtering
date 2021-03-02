@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import Filters_arr, { LanguageFilter } from '../../util/types';
 
 const useStyles = makeStyles({
+    filterSection:{
+        display:"flex",
+        justifyContent:"center"
+    },
     filterGroup:{
         display:"flex",
         flexDirection:"row",
@@ -29,7 +33,7 @@ const Filters:React.FC<FilterProps> = ({activeFilters}:FilterProps) => {
     }
  
     return (
-        <section>
+        <section >
             <FormControl component="fieldset">
                 <FormLabel component="legend">Filter By:</FormLabel>
                 <FormGroup className={styles.filterGroup}>
