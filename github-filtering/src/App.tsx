@@ -16,6 +16,15 @@ const App:React.FC = () => {
   const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
   
   console.log(filters);
+
+  //Gets all repositories 
+  const getRepoData = useCallback(() => {
+    getRepos()
+    .then((res) => {
+      setResults(res.items);
+    });
+  },[]);
+
   useEffect(() => {
     try{
       if(isMounted){
@@ -31,16 +40,10 @@ const App:React.FC = () => {
 
     }
     
-  }, [isMounted]);
+  }, [isMounted, getRepoData]);
 
 
-  //Gets all repositories 
-  const getRepoData = useCallback(() => {
-    getRepos()
-    .then((res) => {
-      setResults(res.items);
-    });
-  },[]);
+  
 
   const searchRepoHandler = (query:string) => {
     getRequestWithQuery(query)
@@ -69,7 +72,7 @@ const App:React.FC = () => {
 
   
   
-  let repoList = (filterResults.length)?<Repolist RepoData={results} Filters={filterResults}/>:<Typography paragraph>No Results from search</Typography>;
+  let repoList = (results.length)?<Repolist RepoData={results} Filters={filterResults}/>:(filterResults.length)?<Repolist RepoData={results} Filters={filterResults}/>:<Typography paragraph>No Results from search</Typography>;
   
 
 
