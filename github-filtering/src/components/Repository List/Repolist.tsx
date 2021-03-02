@@ -5,6 +5,7 @@ import RepoItem from "./RepoList Item/RepoListItem";
 
 type RepolistProps = {
     RepoData:RepoListItem[];
+    Filters:RepoListItem[];
 }
 
 const useStyles = makeStyles({
@@ -21,13 +22,13 @@ const useStyles = makeStyles({
     }
 })
 
-const Repolist:React.FC<RepolistProps> = ({RepoData}:RepolistProps) => {
+const Repolist:React.FC<RepolistProps> = ({RepoData, Filters}:RepolistProps) => {
     const styles = useStyles();
-    
+    let data = (Filters.length)? Filters:RepoData;
     return (
         <div className={styles.listSegment}>
             <div className={styles.repoItems}>
-            {RepoData.map((rInfo) =>(
+            {data.map((rInfo) =>(
                     <RepoItem key={rInfo.node_id} repoInfo={rInfo} /> 
             ))}
             </div>

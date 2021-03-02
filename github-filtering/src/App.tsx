@@ -12,6 +12,7 @@ import { getRepos, getRequestWithQuery } from './util/apiService';
 const App:React.FC = () => {
   const [isMounted, setIsMounted] = useState<boolean>(true);
   const [results, setResults] = useState<RepoListItem[]>([]);
+  const [filterResults, setFilterResults] = useState<RepoListItem[]>([]);
   const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
   
   console.log(filters);
@@ -34,12 +35,12 @@ const App:React.FC = () => {
 
 
   //Gets all repositories 
-  const getRepoData = () => {
+  const getRepoData = useCallback(() => {
     getRepos()
     .then((res) => {
       setResults(res.items);
     });
-  }
+  },[]);
 
   const searchRepoHandler = (query:string) => {
     getRequestWithQuery(query)
@@ -51,10 +52,14 @@ const App:React.FC = () => {
   }
   const filterData = useCallback(() => {
     const activeFilters = filters.filter((f) => f.active === true);
+    if(activeFilters.length){
     activeFilters.forEach((f) => {
       const filtered_results = results.filter((repos) => repos.language === f.name);
-      setResults([...filtered_results])
+      setFilterResults([...filtered_results])
     })
+  }else{
+    setFilterResults(results);
+  }
   },[results, filters])
 
   const addFilters = useCallback((activeFilters:LanguageFilter[]) => {
@@ -64,7 +69,7 @@ const App:React.FC = () => {
 
   
   
-  let repoList = (results.length)?<Repolist RepoData={results}/>:<Typography paragraph>No Results from search</Typography>;
+  let repoList = (filterResults.length)?<Repolist RepoData={results} Filters={filterResults}/>:<Typography paragraph>No Results from search</Typography>;
   
 
 
