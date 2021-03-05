@@ -15,9 +15,9 @@ const useStyles = makeStyles({
     }
 });
 type FilterProps = {
-    activeFilters: (currentFilters:LanguageFilter[]) => void;
+    updateFilters: (currentFilters:LanguageFilter[]) => void;
 }
-const Filters:React.FC<FilterProps> = ({activeFilters}:FilterProps) => {
+const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
     const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const styles = useStyles();
 
@@ -29,7 +29,7 @@ const Filters:React.FC<FilterProps> = ({activeFilters}:FilterProps) => {
     const handleChange = (idx:number) =>{
         filters[idx].active = !filters[idx].active
         setFilters((filters) => [...filters]);
-        activeFilters(filters);
+        updateFilters(filters);
     }
  
     return (

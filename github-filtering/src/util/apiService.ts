@@ -5,7 +5,8 @@ import axios from "axios";
 export const getRequestWithQuery = async(query:string) => {
     const resp =  await axios.get("https://api.github.com/search/repositories",{
         params:{
-            q: query
+            q: query,
+            
         }
     });
     const data =  resp.data;
@@ -20,5 +21,18 @@ export const getRepos = async() => {
         }
     });
     const data = resp.json();
+    return data;
+}
+
+export const getRepositoriesSortedByStars = async(query:string) => {
+    const resp = await axios.get("https://api.github.com/search/repositories", {
+        params:{
+            order:"desc",
+            q:query,
+            sort: "stars",
+            
+        }
+    });
+    const data = resp.data;
     return data;
 }

@@ -1,12 +1,11 @@
-import { AppBar, Toolbar, Typography, Container} from '@material-ui/core';
-import React, { useEffect, useReducer, useState, useCallback } from 'react';
-import {queryReducer} from './util/reducers/queryItemReeducer';
+import {Container} from '@material-ui/core';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import Repolist from "./components/Repository List/Repolist";
 import Filters_arr, {LanguageFilter, RepoListItem} from './util/types';
 import Filters from './components/Filters/Filters';
 import SearchRepos from './components/Search/Search';
-import { getRepos, getRequestWithQuery } from './util/apiService';
+import { getRepos, getRequestWithQuery, getRepositoriesSortedByStars } from './util/apiService';
 import Header from './components/Layout/Header';
 
 
@@ -17,8 +16,7 @@ const App:React.FC = () => {
   const [filterResults, setFilterResults] = useState<RepoListItem[]>([]);
   const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
   
-  console.log(filters);
-
+  
   //Gets all repositories 
   const getRepoData = useCallback(() => {
     getRepos()
@@ -27,10 +25,12 @@ const App:React.FC = () => {
     });
   },[]);
 
+
   useEffect(() => {
     try{
       if(isMounted){
         getRepoData();
+        
       }else{
         return () => {
           setIsMounted(false);
@@ -44,17 +44,18 @@ const App:React.FC = () => {
     
   }, [isMounted, getRepoData]);
 
-
-  
-
+//queries the Github search API
   const searchRepoHandler = (query:string) => {
     getRequestWithQuery(query)
     .then(data => {
-      console.log(data.items);
       setResults(data.items);
     });
+    getRepositoriesSortedByStars(query)
+    .then((data) => console.log(data));
     
   }
+  
+  //filters data by with active filters
   const filterData = useCallback(() => {
     const activeFilters = filters.filter((f) => f.active === true);
     if(activeFilters.length){
@@ -67,6 +68,7 @@ const App:React.FC = () => {
   }
   },[results, filters])
 
+  //updates the active property of LanguageFilter Object
   const addFilters = useCallback((allFilters:LanguageFilter[]) => {
     setFilters([...allFilters]);
     filterData();
@@ -80,7 +82,7 @@ const App:React.FC = () => {
       <Header />
       <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
-        <Filters activeFilters={addFilters}/>
+        <Filters updateFilters={addFilters}/>
         <section>
         <Repolist RepoData={results} Filters={filters} filtered={filterResults}/>
         </section>
