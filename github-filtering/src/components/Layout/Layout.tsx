@@ -1,7 +1,11 @@
 import { AppBar, Toolbar, Typography} from '@material-ui/core';
 import React from 'react';
 
-const Header:React.FC = () => {
+type ContentProps = {
+  children:React.ReactNode;
+}
+
+const Layout:React.FC<ContentProps> = ({children}:ContentProps) => {
     return(
         <>
         <AppBar position="static">
@@ -11,7 +15,10 @@ const Header:React.FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
+      <div>
+        {children}
+      </div>
         </>
     );
 }
-export default Header;
+export default Layout;
