@@ -12,11 +12,12 @@ import Header from './components/Layout/Header';
 
 const App:React.FC = () => {
   const [isMounted, setIsMounted] = useState<boolean>(true);
+  const [queryStr, setQuery] = useState<string>("");
   const [results, setResults] = useState<RepoListItem[]>([]);
   const [filterResults, setFilterResults] = useState<RepoListItem[]>([]);
   const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
   
-  
+  console.log(results)
   //Gets all repositories 
   const getRepoData = useCallback(() => {
     getRepos()
@@ -45,15 +46,28 @@ const App:React.FC = () => {
   }, [isMounted, getRepoData]);
 
 //queries the Github search API
-  const searchRepoHandler = (query:string) => {
+  const searchRepoHandler = useCallback((query:string) => {
+    setQuery(query);
     getRequestWithQuery(query)
     .then(data => {
       setResults(data.items);
     });
-    getRepositoriesSortedByStars(query)
-    .then((data) => console.log(data));
     
-  }
+  },[]);
+
+  const sortRepositoriesHandler = useCallback(() => {
+    try{
+      getRepositoriesSortedByStars(queryStr)
+    .then((data) => {
+      setResults(data.items);
+      console.log(data.items);
+    })
+
+    }catch(err){
+      console.log(err.message)
+
+    }
+  }, [queryStr])
   
   //filters data by with active filters
   const filterData = useCallback(() => {

@@ -1,12 +1,17 @@
+export type Owner = {
+login:string;
+html_url:string;
+avatar_url:string;
+followers_url:string;
+
+}
 export type RepoListItem = {
     node_id:string;
     name:string;
     description:string;
     language:string;
     stargazers_count:number;
-    owner:{
-        login:string;
-    }
+    owner:Owner;
 }
 
 export type LanguageFilter = {
