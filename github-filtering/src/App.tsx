@@ -2,6 +2,7 @@
 import React, {Suspense} from 'react';
 import {Route, Switch, Redirect} from "react-router-dom";
 import Layout from './components/Layout/Layout';
+import OwnerContextProvider from "./context/owner-context";
 
 const SearchPage = React.lazy(() => {
   return import("./containers/Search Container/SearchPage");
@@ -25,7 +26,9 @@ const App:React.FC = () => {
   return (
     <div className="App">
       <Layout >
+      <OwnerContextProvider>
       <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+      </OwnerContextProvider>
       </Layout>
     </div>
   );

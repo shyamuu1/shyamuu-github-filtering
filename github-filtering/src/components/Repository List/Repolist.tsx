@@ -7,6 +7,7 @@ type RepolistProps = {
     RepoData:RepoListItem[];
     Filters:LanguageFilter[];
     filtered:RepoListItem[];
+    clicked: (node_id:string) => void;
 
 }
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
     }
 })
 
-const Repolist:React.FC<RepolistProps> = ({RepoData, Filters, filtered}:RepolistProps) => {
+const Repolist:React.FC<RepolistProps> = ({RepoData, Filters, filtered, clicked}:RepolistProps) => {
     const styles = useStyles();
     const activatedFilters:LanguageFilter[] = Filters.filter((f) => f.active === true);
     let data:RepoListItem[] = (!activatedFilters.length)? RepoData:(activatedFilters.length && filtered.length)?filtered:[];
@@ -33,7 +34,7 @@ const Repolist:React.FC<RepolistProps> = ({RepoData, Filters, filtered}:Repolist
             <div className={styles.listSegment}>
                 <div className={styles.repoItems}>
                 {data.map((rInfo) =>(
-                        <RepoItem key={rInfo.node_id} repoInfo={rInfo} /> 
+                        <RepoItem key={rInfo.node_id} repoInfo={rInfo} selectedRepo={clicked} /> 
                 ))}
                 </div>
             </div>
