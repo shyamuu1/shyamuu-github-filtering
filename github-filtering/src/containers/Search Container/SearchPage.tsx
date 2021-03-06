@@ -1,19 +1,13 @@
 import React, {useState, useEffect, useCallback, useContext} from 'react';
 import {useHistory}from "react-router-dom";
 import { getRepos, getRequestWithQuery, getRepositoriesSortedByStars } from "../../util/apiService";
-import Filters_arr, {RepoListItem, LanguageFilter, Owner} from "../../util/types";
+import Filters_arr, {RepoListItem, LanguageFilter} from "../../util/types";
 import {Container} from '@material-ui/core';
 import SearchRepos from "../../components/Search/Search";
 import Filters from "../../components/Filters/Filters";
 import Repolist from "../../components/Repository List/Repolist";
 import { OwnerContext } from '../../context/owner-context';
 
-const DefaultOwner:Owner = {
-  login:"",
-  html_url:"",
-  avatar_url:"",
-  followers_url: "" 
-}
 
 const SearchPage:React.FC = () => {
     const [isMounted, setIsMounted] = useState<boolean>(true);
@@ -95,11 +89,11 @@ const SearchPage:React.FC = () => {
     filterData();
   }, [filterData]);
 
-  const selectRepoItemHandler = useCallback((node_id:string) => {
-    setCurrentOwnerId(node_id);
+  const selectRepoItemHandler = useCallback((login:string) => {
+    setCurrentOwnerId(login);
     history.push("detail");
     
-  },[ownerId, setCurrentOwnerId]);
+  },[history, setCurrentOwnerId]);
 
     return(
         <Container className="container">

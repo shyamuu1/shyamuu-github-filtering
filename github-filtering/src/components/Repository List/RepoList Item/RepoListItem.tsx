@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const RepoItem:React.FC<RepoItemProps>= ({repoInfo,selectedRepo}:RepoItemProps) => {
     const styles = useStyles();
     return(
-        <Card className={styles.repoCard} onClick={()=> {selectedRepo(repoInfo.node_id)}}>
+        <Card className={styles.repoCard} onClick={()=> {selectedRepo(repoInfo.owner.login)}}>
             <CardHeader title={repoInfo.name} subheader={repoInfo.language} />
             <CardContent>
                 <Typography variant="body1" component="p" className={styles.description}>

@@ -22,9 +22,9 @@ const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
     const styles = useStyles();
 
 
-    const filterCheck = (name:string) => {
-        return filters.find((f) => f.name === name) !== undefined;
-    }
+    // const filterCheck = (name:string) => {
+    //     return filters.find((f) => f.name === name) !== undefined;
+    // }
     
     const handleChange = (idx:number) =>{
         filters[idx].active = !filters[idx].active

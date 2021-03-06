@@ -24,6 +24,16 @@ export const getRepos = async() => {
     return data;
 }
 
+export const getUsersByQuery = async(query:string) => {
+    const resp = await axios.get("https://api.github.com/search/users", {
+        params:{
+            q:query
+        }
+    });
+    const data = resp.data;
+    return data;
+}
+
 export const getRepositoriesSortedByStars = async(query:string) => {
     const resp = await axios.get("https://api.github.com/search/repositories", {
         params:{
