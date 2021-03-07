@@ -1,5 +1,6 @@
-import { AppBar, Toolbar, Typography} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Link} from '@material-ui/core';
 import React from 'react';
+
 
 type ContentProps = {
   children:React.ReactNode;
@@ -11,7 +12,7 @@ const Layout:React.FC<ContentProps> = ({children}:ContentProps) => {
         <AppBar position="static">
         <Toolbar>
           <Typography variant="h6">
-            Repo Query
+            <Link href="/" color="inherit">Repo Query</Link>
           </Typography>
         </Toolbar>
       </AppBar>
