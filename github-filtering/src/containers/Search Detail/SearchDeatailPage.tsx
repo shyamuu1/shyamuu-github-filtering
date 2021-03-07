@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import React, { useContext, useEffect,useState,useCallback } from 'react';
 import { OwnerContext } from '../../context/owner-context';
 import { getUsersByQuery } from '../../util/apiService';
@@ -34,8 +35,12 @@ const SearchDetailPage:React.FC = () => {
     
     
     return(
-        <>
-        </>
+        <Container>
+            <section className="user-content">
+                
+            </section>
+
+        </Container>
 
     );
 }
