@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useCallback, useContext} from 'react';
+import Loader from "../../UI/Spinner/Loader";
 import {useHistory}from "react-router-dom";
 import { getRepos, getRequestWithQuery, getRepositoriesSortedByStars } from "../../util/apiService";
 import Filters_arr, {RepoListItem, LanguageFilter, Owner} from "../../util/types";
@@ -17,14 +18,17 @@ const SearchPage:React.FC = () => {
     const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const history = useHistory();
     const {ownerId, star_count, setCurrentOwnerId, setStars} = useContext(OwnerContext);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
 
     console.log(results)
     console.log(ownerId)
   //Gets all repositories 
   const getRepoData = useCallback(() => {
+    setIsLoading(true);
     getRepos()
     .then((res) => {
+      setIsLoading(false);
       setResults(res.items);
     });
   },[]);
@@ -49,9 +53,11 @@ const SearchPage:React.FC = () => {
 
   //queries the Github search API
   const searchRepoHandler = useCallback((query:string) => {
-    setQuery(query);
+    //setQuery(query);
+    setIsLoading(true);
     getRequestWithQuery(query)
     .then(data => {
+      setIsLoading(false);
       setResults(data.items);
     });
     
@@ -59,8 +65,10 @@ const SearchPage:React.FC = () => {
 
   const sortRepositoriesHandler = useCallback(() => {
     try{
+      setIsLoading(true);
       getRepositoriesSortedByStars(queryStr)
     .then((data) => {
+      setIsLoading(false);
       setResults(data.items);
       console.log(data.items);
     })
@@ -97,12 +105,14 @@ const SearchPage:React.FC = () => {
     
   },[history, setCurrentOwnerId, setStars]);
 
+  let repoList = (isLoading)?<Loader />:<Repolist RepoData={results} Filters={filters} filtered={filterResults} clicked={selectRepoItemHandler}/>;
+
     return(
         <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
         <Filters updateFilters={addFilters}/>
         <section>
-        <Repolist RepoData={results} Filters={filters} filtered={filterResults} clicked={selectRepoItemHandler}/>
+        {repoList}
         </section>
       </Container>
     );
