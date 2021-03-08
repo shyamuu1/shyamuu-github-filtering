@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback, useContext} from 'react';
 import {useHistory}from "react-router-dom";
 import { getRepos, getRequestWithQuery, getRepositoriesSortedByStars } from "../../util/apiService";
-import Filters_arr, {RepoListItem, LanguageFilter} from "../../util/types";
+import Filters_arr, {RepoListItem, LanguageFilter, Owner} from "../../util/types";
 import {Container} from '@material-ui/core';
 import SearchRepos from "../../components/Search/Search";
 import Filters from "../../components/Filters/Filters";
@@ -16,7 +16,7 @@ const SearchPage:React.FC = () => {
     const [filterResults, setFilterResults] = useState<RepoListItem[]>([]);
     const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const history = useHistory();
-    const {ownerId, setCurrentOwnerId} = useContext(OwnerContext);
+    const {ownerId, star_count, setCurrentOwnerId, setStars} = useContext(OwnerContext);
     
 
     console.log(results)
@@ -89,11 +89,13 @@ const SearchPage:React.FC = () => {
     filterData();
   }, [filterData]);
 
-  const selectRepoItemHandler = useCallback((login:string) => {
-    setCurrentOwnerId(login);
+  const selectRepoItemHandler = useCallback((selectedRepo:RepoListItem) => {
+    setCurrentOwnerId(selectedRepo.owner.login);
+    setStars(selectedRepo.stargazers_count);
+    
     history.push("detail");
     
-  },[history, setCurrentOwnerId]);
+  },[history, setCurrentOwnerId, setStars]);
 
     return(
         <Container className="container">

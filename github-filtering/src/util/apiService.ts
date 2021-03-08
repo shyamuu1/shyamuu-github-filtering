@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-
+//get all repositories using axios
 export const getRequestWithQuery = async(query:string) => {
     const resp =  await axios.get("https://api.github.com/search/repositories",{
         params:{
@@ -23,7 +23,7 @@ export const getRepos = async() => {
     const data = resp.json();
     return data;
 }
-
+//get Users relates to query
 export const getUsersByQuery = async(query:string) => {
     const resp = await axios.get("https://api.github.com/search/users", {
         params:{
@@ -33,7 +33,7 @@ export const getUsersByQuery = async(query:string) => {
     const data = resp.data;
     return data;
 }
-
+//get repos sorted by stars
 export const getRepositoriesSortedByStars = async(query:string) => {
     const resp = await axios.get("https://api.github.com/search/repositories", {
         params:{
@@ -45,4 +45,10 @@ export const getRepositoriesSortedByStars = async(query:string) => {
     });
     const data = resp.data;
     return data;
+}
+
+export const getRequest = async(url:string) => {
+const resp = await axios.get(url);
+const data = resp.data;
+return data;
 }

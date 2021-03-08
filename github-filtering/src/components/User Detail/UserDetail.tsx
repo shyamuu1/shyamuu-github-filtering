@@ -5,6 +5,7 @@ import {Owner} from "../../util/types";
 
 type UserDetailProps = {
     currentOwner:Owner;
+    following:number;
 }
 
 const useStyles = makeStyles({
@@ -27,11 +28,10 @@ const useStyles = makeStyles({
     
 })
 
-const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) => {
+const UserDetail:React.FC<UserDetailProps> = ({currentOwner, following}:UserDetailProps) => {
     const styles = useStyles();
     const bull = <span className={styles.bullet}>•</span>;
     const followers_url = `https://github.com/${currentOwner.login}?tab=followers`;
-    const follwoing_url = `https://github.com/${currentOwner.login}?tab=following`;
     return(
         <div className={styles.userDetail}>
             <Card>
@@ -41,7 +41,7 @@ const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) =>
                 />
                 <CardContent>
                     <Typography className={styles.userContent}>
-                    <PeopleOutline/>&nbsp;2&nbsp;<Link href={followers_url} color="inherit"> followers</Link>&nbsp;{bull}&nbsp;1&nbsp;<Link href={follwoing_url} color="inherit"> following</Link>&nbsp;{bull}&nbsp;<StarOutline /> 0
+                    <PeopleOutline/>&nbsp;{following}&nbsp;<Link href={followers_url} color="inherit"> followers</Link>&nbsp;{bull}&nbsp;<StarOutline /> 0
                     </Typography>
                 </CardContent>
             </Card>

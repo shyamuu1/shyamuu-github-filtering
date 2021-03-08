@@ -5,7 +5,7 @@ import {RepoListItem} from '../../../util/types';
 type RepoItemProps = {
     
     repoInfo:RepoListItem;
-    selectedRepo: (node_id:string) => void;
+    selectedRepo: (selectedRepo:RepoListItem) => void;
 }
 
 const useStyles = makeStyles({
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const RepoItem:React.FC<RepoItemProps>= ({repoInfo,selectedRepo}:RepoItemProps) => {
     const styles = useStyles();
     return(
-        <Card className={styles.repoCard} onClick={()=> {selectedRepo(repoInfo.owner.login)}}>
+        <Card className={styles.repoCard} onClick={()=> {selectedRepo(repoInfo)}}>
             <CardHeader title={repoInfo.name} subheader={repoInfo.language} />
             <CardContent>
                 <Typography variant="body1" component="p" className={styles.description}>

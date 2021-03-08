@@ -7,7 +7,7 @@ type RepolistProps = {
     RepoData:RepoListItem[];
     Filters:LanguageFilter[];
     filtered:RepoListItem[];
-    clicked: (node_id:string) => void;
+    clicked: (selectedRepo:RepoListItem) => void;
 
 }
 
