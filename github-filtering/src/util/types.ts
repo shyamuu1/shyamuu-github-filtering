@@ -4,7 +4,8 @@ id:number;
 login:string;
 html_url:string;
 avatar_url:string;
-followers_url:string;
+followers:number;
+stargazers_count: number;
 
 }
 export type RepoListItem = {
@@ -20,6 +21,7 @@ export type LanguageFilter = {
     name:string;
     active:boolean;
 }
+
 
 const Filters_arr:LanguageFilter[] = [
     {name: "Java", active:false},

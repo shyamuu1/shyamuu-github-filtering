@@ -5,7 +5,7 @@ import {Owner} from "../../util/types";
 
 type UserDetailProps = {
     currentOwner:Owner;
-    following:number;
+    
 }
 
 const useStyles = makeStyles({
@@ -24,24 +24,34 @@ const useStyles = makeStyles({
         display:"flex",
         flexDirection:"row",
         flexWrap:"wrap" 
+    }, 
+    AvatarStyle:{
+        height:"260px",
+        width:"260px",
+    },
+    header:{
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center"
     }
     
 })
 
-const UserDetail:React.FC<UserDetailProps> = ({currentOwner, following}:UserDetailProps) => {
+const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) => {
     const styles = useStyles();
     const bull = <span className={styles.bullet}>•</span>;
     const followers_url = `https://github.com/${currentOwner.login}?tab=followers`;
     return(
         <div className={styles.userDetail}>
             <Card>
-                <CardHeader 
-                avatar={<Avatar>{currentOwner.login.slice(0, 1)}</Avatar>}
+                <CardHeader
+                className={styles.header}
+                avatar={<Avatar className={styles.AvatarStyle} alt="My avatar" src={currentOwner.avatar_url} />}
                 title={currentOwner.login + " Repository Page"}
                 />
                 <CardContent>
                     <Typography className={styles.userContent}>
-                    <PeopleOutline/>&nbsp;{following}&nbsp;<Link href={followers_url} color="inherit"> followers</Link>&nbsp;{bull}&nbsp;<StarOutline /> 0
+                    <PeopleOutline/>&nbsp;{currentOwner.followers}&nbsp;<Link href={followers_url} color="inherit"> followers</Link>&nbsp;{bull}&nbsp;<StarOutline /> 0
                     </Typography>
                 </CardContent>
             </Card>

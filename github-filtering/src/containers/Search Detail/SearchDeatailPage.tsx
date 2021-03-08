@@ -6,16 +6,26 @@ import { OwnerContext } from '../../context/owner-context';
 import { getRequest, getUsersByQuery } from '../../util/apiService';
 import { Owner } from '../../util/types';
 
+const default_Owner:Owner = {
+    node_id: "",
+    id: 0,
+    login: "",
+    html_url: "",
+    avatar_url: "",
+    followers: 0,
+    stargazers_count: 0
+}
+
 const SearchDetailPage:React.FC = () => {
     const {ownerId, star_count} = useContext(OwnerContext);
     const [users, setUsers] = useState<Owner[]>([]);
+    const [user, setUser] = useState<Owner>(default_Owner);
     const [followers, setFollowers] = useState<Owner[]>([]);
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
-    console.log(ownerId, star_count);
     console.log(users);
-    console.log(followers);
+    
 
     // const getUsers = useCallback(() => {
     //     setIsLoading(true);
@@ -29,19 +39,32 @@ const SearchDetailPage:React.FC = () => {
 
     const getUser = useCallback(() => {
         let user_url:string = `https://api.github.com/users/${ownerId}`
+        setIsLoading(true);
         getRequest(user_url)
         .then((res) => {
-            setUsers([...users,res]);
-        });
-    },[ownerId, users])
+            setIsLoading(false);
+            setUser((currentState) => {
+                return {
+                    ...currentState,
+                    node_id:res.node_id,
+                    id:res.id,
+                    login: res.login,
+                    html_url: res.html_url,
+                    avatar_url: res.avatar_url,
+                    followers: res.followers
 
-    const getFollowers = useCallback(() => {
-        let followers_url:string = `https://api.github.com/users/${ownerId}/followers`;
+                }
+            })
+        });
+    },[ownerId])
+
+    const getUsersRepos = useCallback(() => {
+        let followers_url:string = `https://api.github.com/users/${ownerId}/repos`;
         setIsLoading(true);
         getRequest(followers_url)
         .then((res) => {
             setIsLoading(false);
-            setFollowers(res);
+            console.log(res);
         });
     },[ownerId])
 
@@ -50,15 +73,16 @@ const SearchDetailPage:React.FC = () => {
         try{
             if(isMounted){
                 getUser();
+                getUsersRepos();
             }else{
                 return () => {setIsMounted(false)};
             }
         }catch(err){
             console.log(err.message);
         }
-    },[getFollowers, getUser, isMounted])
+    },[ isMounted])
     
-    let userDetail = (!isLoading && users.length)?<UserDetail currentOwner={users[0]} following={followers.length} />: null;
+    let userDetail = (!isLoading)?<UserDetail currentOwner={user} />: null;
     return(
         <>
         <Container>
