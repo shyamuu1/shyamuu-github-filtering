@@ -1,10 +1,10 @@
-import { Container } from '@material-ui/core';
-import Banner from "../../components/Banner/Banner";
+import { Container, makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect,useState,useCallback } from 'react';
 import UserDetail from '../../components/User Detail/UserDetail';
 import { OwnerContext } from '../../context/owner-context';
-import { getRequest, getUsersByQuery } from '../../util/apiService';
+import { getRequest} from '../../util/apiService';
 import { Owner } from '../../util/types';
+import Userlist from '../../components/User Popular Repo List/UserList';
 
 const default_Owner:Owner = {
     node_id: "",
@@ -13,8 +13,18 @@ const default_Owner:Owner = {
     html_url: "",
     avatar_url: "",
     followers: 0,
-    stargazers_count: 0
+    following: 0
 }
+const useStyles = makeStyles({
+    searchDetailContent:{
+        display:"flex",
+        flexDirection:"row",
+        flexWrap:"wrap",
+        paddingTop:"16px",
+        paddingLeft:"8px",
+        justifyContent:"space-evenly"
+    }
+})
 
 const SearchDetailPage:React.FC = () => {
     const {ownerId, star_count} = useContext(OwnerContext);
@@ -23,8 +33,9 @@ const SearchDetailPage:React.FC = () => {
     const [followers, setFollowers] = useState<Owner[]>([]);
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const styles =  useStyles()
     
-    console.log(users);
+    console.log(user);
     
 
     // const getUsers = useCallback(() => {
@@ -51,7 +62,8 @@ const SearchDetailPage:React.FC = () => {
                     login: res.login,
                     html_url: res.html_url,
                     avatar_url: res.avatar_url,
-                    followers: res.followers
+                    followers: res.followers,
+                    following: res.following
 
                 }
             })
@@ -84,14 +96,14 @@ const SearchDetailPage:React.FC = () => {
     
     let userDetail = (!isLoading)?<UserDetail currentOwner={user} />: null;
     return(
-        <>
-        <Container>
-            <div>
+        <section>
+        <Container className={styles.searchDetailContent}>
+            <React.Fragment>
             {userDetail}
-            {/* Listcomponent */}
-            </div>
+            <Userlist />
+            </React.Fragment>
         </Container>
-        </>
+        </section>
     );
 }
 

@@ -5,7 +5,7 @@ login:string;
 html_url:string;
 avatar_url:string;
 followers:number;
-stargazers_count: number;
+following: number;
 
 }
 export type RepoListItem = {

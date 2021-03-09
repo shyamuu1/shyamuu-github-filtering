@@ -1,5 +1,5 @@
-import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link} from "@material-ui/core";
-import {PeopleOutline, StarOutline} from '@material-ui/icons/';
+import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link, CardActions, Button, Divider} from "@material-ui/core";
+import {PeopleOutline} from '@material-ui/icons/';
 import React from "react";
 import {Owner} from "../../util/types";
 
@@ -12,8 +12,7 @@ const useStyles = makeStyles({
     userDetail: {
         display:"flex",
         flexDirection:"column",
-        width: "30%",
-        paddingTop:"8px"
+        maxWidth: "300px",
     },
     bullet: {
         display: 'inline-block',
@@ -33,6 +32,10 @@ const useStyles = makeStyles({
         display:"flex",
         flexDirection:"column",
         justifyContent:"center"
+    },
+    customCardStyle:{
+        border:"none",
+        boxShadow:"none"
     }
     
 })
@@ -43,17 +46,26 @@ const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) =>
     const followers_url = `https://github.com/${currentOwner.login}?tab=followers`;
     return(
         <div className={styles.userDetail}>
-            <Card>
+            <Card className={styles.customCardStyle}>
                 <CardHeader
                 className={styles.header}
                 avatar={<Avatar className={styles.AvatarStyle} alt="My avatar" src={currentOwner.avatar_url} />}
-                title={currentOwner.login + " Repository Page"}
+                title={<Typography variant="subtitle1">{currentOwner.login.toUpperCase() + " Repository Page"}</Typography>}
                 />
                 <CardContent>
                     <Typography className={styles.userContent}>
-                    <PeopleOutline/>&nbsp;{currentOwner.followers}&nbsp;<Link href={followers_url} color="inherit"> followers</Link>&nbsp;{bull}&nbsp;<StarOutline /> 0
+                    <PeopleOutline/>&nbsp;{currentOwner.followers}&nbsp;
+                    <Link href={followers_url} color="inherit"> followers</Link>
+                    &nbsp;{bull}&nbsp;{currentOwner.following}&nbsp;following
                     </Typography>
                 </CardContent>
+                <CardActions>
+                <Button fullWidth variant="outlined" color="primary" href={currentOwner.html_url}>
+                    View Repository
+                </Button>
+                </CardActions>
+                <Divider light />
+                <Typography variant="h6">Organizations</Typography>
             </Card>
         </div>
     );
