@@ -10,6 +10,7 @@ const default_Owner:Owner = {
     node_id: "",
     id: 0,
     login: "",
+    bio:"",
     html_url: "",
     avatar_url: "",
     followers: 0,
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
 })
 
 const SearchDetailPage:React.FC = () => {
-    const {ownerId, star_count} = useContext(OwnerContext);
+    const {ownerId} = useContext(OwnerContext);
     const [users, setUsers] = useState<Owner[]>([]);
     const [user, setUser] = useState<Owner>(default_Owner);
     const [followers, setFollowers] = useState<Owner[]>([]);
@@ -60,6 +61,7 @@ const SearchDetailPage:React.FC = () => {
                     node_id:res.node_id,
                     id:res.id,
                     login: res.login,
+                    bio: res.bio,
                     html_url: res.html_url,
                     avatar_url: res.avatar_url,
                     followers: res.followers,
@@ -79,6 +81,8 @@ const SearchDetailPage:React.FC = () => {
             console.log(res);
         });
     },[ownerId])
+
+    
 
 
     useEffect(() => {

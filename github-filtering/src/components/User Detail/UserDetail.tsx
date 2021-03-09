@@ -1,6 +1,7 @@
 import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link, CardActions, Button, Divider} from "@material-ui/core";
 import {PeopleOutline} from '@material-ui/icons/';
 import React from "react";
+import Organizations from "../Organizations/Organizations";
 import {Owner} from "../../util/types";
 
 type UserDetailProps = {
@@ -36,6 +37,11 @@ const useStyles = makeStyles({
     customCardStyle:{
         border:"none",
         boxShadow:"none"
+    },
+    OrganizationList: {
+        display:"flex",
+        flexDirection:"row",
+        flexWrap: "wrap"
     }
     
 })
@@ -53,6 +59,7 @@ const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) =>
                 title={<Typography variant="subtitle1">{currentOwner.login.toUpperCase() + " Repository Page"}</Typography>}
                 />
                 <CardContent>
+                    <Typography paragraph>{(currentOwner.bio !== "")? currentOwner.bio:"No Description"}</Typography>
                     <Typography className={styles.userContent}>
                     <PeopleOutline/>&nbsp;{currentOwner.followers}&nbsp;
                     <Link href={followers_url} color="inherit"> followers</Link>
@@ -66,6 +73,7 @@ const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) =>
                 </CardActions>
                 <Divider light />
                 <Typography variant="h6">Organizations</Typography>
+                <Organizations />
             </Card>
         </div>
     );
