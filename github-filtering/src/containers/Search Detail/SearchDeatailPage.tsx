@@ -137,13 +137,13 @@ const SearchDetailPage:React.FC = () => {
         </React.Fragment>
     ):<Loader />
     return(
-        <section className={styles.searchDetailPage}>
+        <section>
         <Container className={styles.searchDetailContent}>
             {userFragment}
-        </Container>
             <div className={styles.BackButton}>
             <Button style={{maxWidth:"300px"}} fullWidth variant="outlined" color="primary" onClick={goBackButtonHandler} >Go Back to Seach</Button>
             </div>
+        </Container>  
         </section>
     );
 }

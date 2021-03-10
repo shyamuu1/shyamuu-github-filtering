@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     userDetail: {
         display:"flex",
         flexDirection:"column",
-        maxWidth: "300px",
+        maxWidth: "500px",
     },
     bullet: {
         display: 'inline-block',
@@ -25,8 +25,10 @@ const useStyles = makeStyles({
         flexWrap:"wrap" 
     }, 
     AvatarStyle:{
-        height:"260px",
-        width:"260px",
+        maxHeight:"260px",
+        maxWidth:"260px",
+        minWidth:"190px",
+        minHeight:"190px"
     },
     header:{
         display:"flex",
@@ -36,6 +38,12 @@ const useStyles = makeStyles({
     customCardStyle:{
         border:"none",
         boxShadow:"none"
+    },
+    userDetailActions:{
+        display:"flex",
+        flexDirection:"row",
+        width:"100%",
+        justifyContent:"center"
     }
     
 })
