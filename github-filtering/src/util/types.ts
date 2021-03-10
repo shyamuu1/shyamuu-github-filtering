@@ -7,6 +7,7 @@ html_url:string;
 avatar_url:string;
 followers:number;
 following: number;
+
 }
 
 export type Orgs = {
@@ -20,6 +21,7 @@ export type RepoListItem = {
     description:string;
     language:string;
     stargazers_count:number;
+    updated_at:string;
     owner:Owner;
 }
 

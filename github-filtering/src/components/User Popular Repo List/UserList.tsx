@@ -19,6 +19,7 @@ const Userlist:React.FC<UserListProps> = ({repos}:UserListProps) => {
 
     const styles = useStyles(); 
     let data = (repos.length < 5)? repos:repos.slice(0,5);
+    
 
     return (
         <div className={styles.ListStyle}>
@@ -30,7 +31,7 @@ const Userlist:React.FC<UserListProps> = ({repos}:UserListProps) => {
                     <ListItemIcon>
                         <GithubIcon />
                     </ListItemIcon>
-                    <ListItemText primary={r.name} secondary="Last updated" />
+                    <ListItemText primary={r.name} secondary={`Last updated at ${r.updated_at.slice(0,10)}`} />
                 </ListItem>
             ))}
         </List>
