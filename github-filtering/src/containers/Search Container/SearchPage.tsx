@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback, useContext} from 'react';
 import Loader from "../../UI/Spinner/Loader";
 import {useHistory}from "react-router-dom";
 import { getRepos, getRequestWithQuery, getRepositoriesSortedByStars } from "../../util/apiService";
-import Filters_arr, {RepoListItem, LanguageFilter, Owner} from "../../util/types";
+import Filters_arr, {RepoListItem, LanguageFilter} from "../../util/types";
 import {Container} from '@material-ui/core';
 import SearchRepos from "../../components/Search/Search";
 import Filters from "../../components/Filters/Filters";
@@ -17,7 +17,7 @@ const SearchPage:React.FC = () => {
     const [filterResults, setFilterResults] = useState<RepoListItem[]>([]);
     const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const history = useHistory();
-    const {ownerId, star_count, setCurrentOwnerId, setStars} = useContext(OwnerContext);
+    const {ownerId, setCurrentOwnerId} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
 
@@ -37,7 +37,6 @@ const SearchPage:React.FC = () => {
     try{
       if(isMounted){
         getRepoData();
-        
       }else{
         return () => {
           setIsMounted(false);
@@ -62,6 +61,7 @@ const SearchPage:React.FC = () => {
     });
     
   },[]);
+  
 
   const sortRepositoriesHandler = useCallback(() => {
     try{
@@ -98,12 +98,10 @@ const SearchPage:React.FC = () => {
   }, [filterData]);
 
   const selectRepoItemHandler = useCallback((selectedRepo:RepoListItem) => {
-    setCurrentOwnerId(selectedRepo.owner.login);
-    setStars(selectedRepo.stargazers_count);
-    
+    setCurrentOwnerId(selectedRepo.owner.login); 
     history.push("detail");
     
-  },[history, setCurrentOwnerId, setStars]);
+  },[history, setCurrentOwnerId]);
 
   let repoList = (isLoading)?<Loader />:<Repolist RepoData={results} Filters={filters} filtered={filterResults} clicked={selectRepoItemHandler}/>;
 

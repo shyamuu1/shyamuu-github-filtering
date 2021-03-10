@@ -63,3 +63,15 @@ export const getSortRequest = async(url:string, sortType:string) => {
     const data = resp.data;
     return data;
 }
+
+export const getQuerySortRequest = async(url:string, query:string, sortType:string) => {
+    const resp = await axios.get(url,{
+        params:{
+            q:"language:"+query,
+            order:"desc",
+            sort:sortType
+        }
+    });
+    const data = resp.data;
+    return data;
+}
