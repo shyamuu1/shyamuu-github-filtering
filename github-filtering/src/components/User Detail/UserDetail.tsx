@@ -1,8 +1,7 @@
 import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link, CardActions, Button, Divider} from "@material-ui/core";
 import {PeopleOutline} from '@material-ui/icons/';
 import React from "react";
-import Organizations from "../Organizations/Organizations";
-import {Owner, Orgs} from "../../util/types";
+import {Owner} from "../../util/types";
 
 type UserDetailProps = {
     currentOwner:Owner;
