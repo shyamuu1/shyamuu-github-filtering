@@ -2,7 +2,7 @@ import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link, Ca
 import {PeopleOutline} from '@material-ui/icons/';
 import React from "react";
 import Organizations from "../Organizations/Organizations";
-import {Owner} from "../../util/types";
+import {Owner, Orgs} from "../../util/types";
 
 type UserDetailProps = {
     currentOwner:Owner;
@@ -37,11 +37,6 @@ const useStyles = makeStyles({
     customCardStyle:{
         border:"none",
         boxShadow:"none"
-    },
-    OrganizationList: {
-        display:"flex",
-        flexDirection:"row",
-        flexWrap: "wrap"
     }
     
 })
@@ -71,9 +66,6 @@ const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) =>
                     View Repository
                 </Button>
                 </CardActions>
-                <Divider light />
-                <Typography variant="h6">Organizations</Typography>
-                <Organizations />
             </Card>
         </div>
     );

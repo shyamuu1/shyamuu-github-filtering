@@ -1,10 +1,13 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { Button, Container, Divider, makeStyles, Typography } from '@material-ui/core';
 import React, { useContext, useEffect,useState,useCallback } from 'react';
 import UserDetail from '../../components/User Detail/UserDetail';
 import { OwnerContext } from '../../context/owner-context';
-import { getRequest} from '../../util/apiService';
-import { Owner } from '../../util/types';
+import { getRequest, getSortRequest} from '../../util/apiService';
+import { Owner, RepoListItem, Orgs } from '../../util/types';
 import Userlist from '../../components/User Popular Repo List/UserList';
+import Loader from "../../UI/Spinner/Loader";
+import Organizations from '../../components/Organizations/Organizations';
+import { useHistory } from 'react-router';
 
 const default_Owner:Owner = {
     node_id: "",
@@ -24,30 +27,49 @@ const useStyles = makeStyles({
         paddingTop:"16px",
         paddingLeft:"8px",
         justifyContent:"space-evenly"
+    },
+    OrgsandRepoContent:{
+        display:"flex",
+        flexDirection:"column",
+        
+    },
+    BackButton:{
+        display:"flex",
+        padding:"8px",
+        width: "100%",
+        flexDirection:"row",
+        justifyContent:"center"
+    },
+    searchDetailPage: {
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center",
+        alignContent:"center",
     }
 })
 
 const SearchDetailPage:React.FC = () => {
     const {ownerId} = useContext(OwnerContext);
-    const [users, setUsers] = useState<Owner[]>([]);
     const [user, setUser] = useState<Owner>(default_Owner);
-    const [followers, setFollowers] = useState<Owner[]>([]);
+    const [followers, setFollowers] = useState<RepoListItem[]>([]);
+    const [orgs, setOrgs] = useState<Orgs[]>([]);
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const history = useHistory();
     const styles =  useStyles()
     
     console.log(user);
     
 
-    // const getUsers = useCallback(() => {
-    //     setIsLoading(true);
-    //     getUsersByQuery(ownerId)
-    //     .then((res) => {
-    //         setIsLoading(false);
-    //         setUsers(res.items.filter((v:Owner) => v.login === ownerId));
-
-    //     });
-    // },[ownerId]);
+    const getOrganizations = useCallback(() => {
+        const orgs_url:string = `https://api.github.com/users/${ownerId}/orgs`;
+        setIsLoading(true);
+        getRequest(orgs_url)
+        .then((res) =>  {
+            setIsLoading(false);
+            setOrgs(res);
+        })
+    }, [ownerId])
 
     const getUser = useCallback(() => {
         let user_url:string = `https://api.github.com/users/${ownerId}`
@@ -75,10 +97,10 @@ const SearchDetailPage:React.FC = () => {
     const getUsersRepos = useCallback(() => {
         let followers_url:string = `https://api.github.com/users/${ownerId}/repos`;
         setIsLoading(true);
-        getRequest(followers_url)
+        getSortRequest(followers_url,"stars")
         .then((res) => {
             setIsLoading(false);
-            console.log(res);
+            setFollowers(res);
         });
     },[ownerId])
 
@@ -90,6 +112,7 @@ const SearchDetailPage:React.FC = () => {
             if(isMounted){
                 getUser();
                 getUsersRepos();
+                getOrganizations();
             }else{
                 return () => {setIsMounted(false)};
             }
@@ -97,16 +120,30 @@ const SearchDetailPage:React.FC = () => {
             console.log(err.message);
         }
     },[ isMounted])
+
+    const goBackButtonHandler = () => {
+        history.push("/");
+    }
     
-    let userDetail = (!isLoading)?<UserDetail currentOwner={user} />: null;
+    let userFragment = (!isLoading)? (
+        <React.Fragment>
+            <UserDetail currentOwner={user}/>
+            <section className={styles.OrgsandRepoContent}>
+            <Typography variant="h6">Organizations</Typography>
+            <Divider />
+            <Organizations orgs={orgs} />
+            <Userlist repos={followers}/>
+            </section>
+        </React.Fragment>
+    ):<Loader />
     return(
-        <section>
+        <section className={styles.searchDetailPage}>
         <Container className={styles.searchDetailContent}>
-            <React.Fragment>
-            {userDetail}
-            <Userlist />
-            </React.Fragment>
+            {userFragment}
         </Container>
+            <div className={styles.BackButton}>
+            <Button style={{maxWidth:"300px"}} fullWidth variant="outlined" color="primary" onClick={goBackButtonHandler} >Go Back to Seach</Button>
+            </div>
         </section>
     );
 }

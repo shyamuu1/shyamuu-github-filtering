@@ -52,3 +52,14 @@ const resp = await axios.get(url);
 const data = resp.data;
 return data;
 }
+
+export const getSortRequest = async(url:string, sortType:string) => {
+    const resp = await axios.get(url,{
+        params:{
+            order:"desc",
+            sort:sortType
+        }
+    });
+    const data = resp.data;
+    return data;
+}
