@@ -3,10 +3,6 @@ import React, { useState } from 'react';
 import Filters_arr, { LanguageFilter } from '../../util/types';
 
 const useStyles = makeStyles({
-    filterSection:{
-        display:"flex",
-        justifyContent:"center"
-    },
     filterGroup:{
         display:"flex",
         flexDirection:"row",

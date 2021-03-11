@@ -1,4 +1,4 @@
-import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link, CardActions, Button, Divider} from "@material-ui/core";
+import { Card, Avatar, CardHeader, CardContent, Typography, makeStyles, Link, CardActions, Button} from "@material-ui/core";
 import {PeopleOutline} from '@material-ui/icons/';
 import React from "react";
 import {Owner} from "../../util/types";
