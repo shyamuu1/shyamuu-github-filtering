@@ -1,13 +1,13 @@
 import React, {createContext, useState} from 'react';
 
 export type OwnerCtx = {
-    ownerId:string;
-    setCurrentOwnerId: (id:string) => void;
+    loginName:string;
+    setCurrentLogin: (id:string) => void;
 }
 
 export const OwnerContext = createContext<OwnerCtx>({
-    ownerId:"",
-    setCurrentOwnerId: (id:string) => {}
+    loginName:"",
+    setCurrentLogin: (id:string) => {}
 });
 
 type OwnerCtxProps = {
@@ -16,18 +16,18 @@ type OwnerCtxProps = {
 
 
 const OwnerContextProvider:React.FC<OwnerCtxProps> = ({children}:OwnerCtxProps)=> {
-    const [ownerId, setOwnerId] = useState<string>("");
+    const [loginName, setLogin] = useState<string>("");
 
-    const updateOwnerId = (node_id:string) => {
-        setOwnerId(node_id);
+    const updateLogin = (login:string) => {
+        setLogin(login);
     }
 
 
     return(
         <OwnerContext.Provider 
         value={{
-            ownerId:ownerId,
-            setCurrentOwnerId:updateOwnerId
+            loginName:loginName,
+            setCurrentLogin:updateLogin
             }}>
             {children}
         </OwnerContext.Provider>

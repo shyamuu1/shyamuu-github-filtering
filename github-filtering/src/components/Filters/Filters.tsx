@@ -17,16 +17,11 @@ const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
     const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const styles = useStyles();
 
-
-    // const filterCheck = (name:string) => {
-    //     return filters.find((f) => f.name === name) !== undefined;
-    // }
-    
+    //updates filters active properties when checkbox is selected
     const handleChange = (idx:number) =>{
         filters[idx].active = !filters[idx].active
         let currentFilters = [...filters]
         setFilters(currentFilters)
-        // let activeFilters:LanguageFilter[] = filters.filter((f) => f.active === true);
         updateFilters(currentFilters);
     }
  

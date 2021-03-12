@@ -7,7 +7,8 @@ type ToggleSortProps = {
 
 const ToggleSort:React.FC<ToggleSortProps> = ({sorted}:ToggleSortProps) => {
     const [isSorted, setIsSorted] =  useState<boolean>(false);
-    //console.log(isSorted);
+
+    //keeps track of whether the switch is active or not active
     const handleToggleChange = () => {
         sorted(!isSorted);
         setIsSorted(!isSorted);

@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 })
 
 const SearchDetailPage:React.FC = () => {
-    const {ownerId} = useContext(OwnerContext);
+    const {loginName} = useContext(OwnerContext);
     const [user, setUser] = useState<Owner>(default_Owner);
     const [followers, setFollowers] = useState<RepoListItem[]>([]);
     const [orgs, setOrgs] = useState<Orgs[]>([]);
@@ -62,17 +62,17 @@ const SearchDetailPage:React.FC = () => {
     
 
     const getOrganizations = useCallback(() => {
-        const orgs_url:string = `https://api.github.com/users/${ownerId}/orgs`;
+        const orgs_url:string = `https://api.github.com/users/${loginName}/orgs`;
         setIsLoading(true);
         getRequest(orgs_url)
         .then((res) =>  {
             setIsLoading(false);
             setOrgs(res);
         })
-    }, [ownerId])
+    }, [loginName])
 
     const getUser = useCallback(() => {
-        let user_url:string = `https://api.github.com/users/${ownerId}`
+        let user_url:string = `https://api.github.com/users/${loginName}`
         setIsLoading(true);
         getRequest(user_url)
         .then((res) => {
@@ -92,17 +92,17 @@ const SearchDetailPage:React.FC = () => {
                 }
             })
         });
-    },[ownerId])
+    },[loginName])
 
     const getUsersRepos = useCallback(() => {
-        let followers_url:string = `https://api.github.com/users/${ownerId}/repos`;
+        let followers_url:string = `https://api.github.com/users/${loginName}/repos`;
         setIsLoading(true);
         getSortRequest(followers_url,"stars")
         .then((res) => {
             setIsLoading(false);
             setFollowers(res);
         });
-    },[ownerId])
+    },[loginName])
 
     
 
