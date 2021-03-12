@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-//get all repositories using axios
+//get repos the best match query 
 export const getRequestWithQuery = async(query:string) => {
     const resp =  await axios.get("https://api.github.com/search/repositories",{
         params:{
@@ -13,46 +13,14 @@ export const getRequestWithQuery = async(query:string) => {
     return data;
 }
 
-export const getRepos = async() => {
-    const resp = await fetch("https://api.github.com/search/repositories?q=q", {
-        method:"GET",
-        headers: {
-            "Accept":"application/vnd.github.v3+json"
-        }
-    });
-    const data = resp.json();
-    return data;
-}
-//get Users relates to query
-export const getUsersByQuery = async(query:string) => {
-    const resp = await axios.get("https://api.github.com/search/users", {
-        params:{
-            q:query
-        }
-    });
-    const data = resp.data;
-    return data;
-}
-//get repos sorted by stars
-export const getRepositoriesSortedByStars = async(query:string) => {
-    const resp = await axios.get("https://api.github.com/search/repositories", {
-        params:{
-            order:"desc",
-            q:query,
-            sort: "stars",
-            
-        }
-    });
-    const data = resp.data;
-    return data;
-}
-
+//general get request returns data based on url
 export const getRequest = async(url:string) => {
 const resp = await axios.get(url);
 const data = resp.data;
 return data;
 }
 
+//get request that returns data in descending order based on sortType
 export const getSortRequest = async(url:string, sortType:string) => {
     const resp = await axios.get(url,{
         params:{
@@ -64,14 +32,3 @@ export const getSortRequest = async(url:string, sortType:string) => {
     return data;
 }
 
-export const getQuerySortRequest = async(url:string, query:string, sortType:string) => {
-    const resp = await axios.get(url,{
-        params:{
-            q:"language:"+query,
-            order:"desc",
-            sort:sortType
-        }
-    });
-    const data = resp.data;
-    return data;
-}
