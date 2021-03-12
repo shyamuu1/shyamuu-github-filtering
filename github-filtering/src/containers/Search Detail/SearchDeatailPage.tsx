@@ -60,7 +60,7 @@ const SearchDetailPage:React.FC = () => {
     
     console.log(user);
     
-
+    // gets orgnaizations affiliated with user
     const getOrganizations = useCallback(() => {
         const orgs_url:string = `https://api.github.com/users/${loginName}/orgs`;
         setIsLoading(true);
@@ -71,6 +71,7 @@ const SearchDetailPage:React.FC = () => {
         })
     }, [loginName])
 
+    //get user by loginName or username
     const getUser = useCallback(() => {
         let user_url:string = `https://api.github.com/users/${loginName}`
         setIsLoading(true);
@@ -94,6 +95,8 @@ const SearchDetailPage:React.FC = () => {
         });
     },[loginName])
 
+
+    //gets repos affiliated with current user
     const getUsersRepos = useCallback(() => {
         let followers_url:string = `https://api.github.com/users/${loginName}/repos`;
         setIsLoading(true);

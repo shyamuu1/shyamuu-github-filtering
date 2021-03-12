@@ -35,15 +35,15 @@ const Repolist:React.FC<RepolistProps> = ({RepoData,  Filters,  sort, clicked}:R
     //checks if there are filters and if list needs to be sorted then filters list
     const filterData = ():RepoListItem[] => {
         let currentData:RepoListItem[] = [];
-        if(activatedFilters.length && sort === true){
+        if(activatedFilters.length && sort){
             activatedFilters.forEach((filt) => {
                  currentData= sortMyData.filter((val) => val.language === filt.name);
             })
         }
-        else if(!activatedFilters.length && sort === true){
+        else if(!activatedFilters.length && sort){
             currentData= sortMyData
         }
-        else if(activatedFilters.length && sort === false){
+        else if(activatedFilters.length && !sort){
             activatedFilters.forEach((filt) => {
                  currentData = RepoData.filter((val) => val.language === filt.name);
             })
