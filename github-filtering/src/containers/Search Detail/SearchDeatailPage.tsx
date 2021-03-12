@@ -55,6 +55,7 @@ const SearchDetailPage:React.FC = () => {
     const [orgs, setOrgs] = useState<Orgs[]>([]);
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState(null);
     const history = useHistory();
     const styles =  useStyles()
     
@@ -66,9 +67,10 @@ const SearchDetailPage:React.FC = () => {
         setIsLoading(true);
         getRequest(orgs_url)
         .then((res) =>  {
-            setIsLoading(false);
+            
             setOrgs(res);
         })
+        setIsLoading(false);
     }, [loginName])
 
     //get user by loginName or username
@@ -77,7 +79,7 @@ const SearchDetailPage:React.FC = () => {
         setIsLoading(true);
         getRequest(user_url)
         .then((res) => {
-            setIsLoading(false);
+            
             setUser((currentState) => {
                 return {
                     ...currentState,
@@ -93,6 +95,7 @@ const SearchDetailPage:React.FC = () => {
                 }
             })
         });
+        setIsLoading(false);
     },[loginName])
 
 
@@ -102,9 +105,9 @@ const SearchDetailPage:React.FC = () => {
         setIsLoading(true);
         getSortRequest(followers_url,"stars")
         .then((res) => {
-            setIsLoading(false);
             setFollowers(res);
         });
+        setIsLoading(false);
     },[loginName])
 
     
@@ -120,6 +123,7 @@ const SearchDetailPage:React.FC = () => {
                 return () => {setIsMounted(false)};
             }
         }catch(err){
+            setError(err);
             console.log(err.message);
         }
     },[ isMounted])
@@ -128,7 +132,7 @@ const SearchDetailPage:React.FC = () => {
         history.goBack();
     }
     
-    let userFragment = (!isLoading)? (
+    let userFragment = (!isLoading && !error)? (
         <React.Fragment>
             <UserDetail currentOwner={user}/>
             <section className={styles.OrgsandRepoContent}>

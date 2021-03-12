@@ -21,6 +21,7 @@ const SearchPage:React.FC = () => {
     const { setCurrentLogin} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSorted, setSorted] = useState(false);
+    const [error, setError] = useState("");
     
 console.log(queryStr);
 
@@ -35,6 +36,7 @@ console.log(queryStr);
       }
 
     }catch(err){
+      setError(err.message);
       console.log(err.message);
 
     }
@@ -71,14 +73,14 @@ console.log(queryStr);
 
   //checks if list is still loading and returns a loading animation otherwise displays a list
   let repoList = (isLoading)?<Loader />:<Repolist RepoData={results}  Filters={filters}  sort={isSorted} clicked={selectRepoItemHandler}/>;
-
+  let content = (error)?<p>{error}</p>:repoList;
     return(
         <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
         <Filters updateFilters={addFilters} active={searching}/>
         <ToggleSort sorted={ToggleSortHandler} active={searching}/>
         <section>
-        {repoList}
+        {content}
         </section>
       </Container>
     );

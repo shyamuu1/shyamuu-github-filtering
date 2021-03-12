@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     userDetail: {
         display:"flex",
         flexDirection:"column",
-        maxWidth: "500px",
+        width:"500px"
     },
     bullet: {
         display: 'inline-block',
