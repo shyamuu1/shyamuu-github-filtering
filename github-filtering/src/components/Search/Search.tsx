@@ -28,6 +28,7 @@ const SearchRepos:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
     
     const styles = useStyles();
     const [enteredValue, setEnteredValue] = useState<string>("");
+    const [disable,setDisable] = useState<boolean>(true);
 
     const submitHandler = (event:SyntheticEvent) => {
         event.preventDefault();
@@ -42,12 +43,17 @@ const SearchRepos:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
     return (
         <form onSubmit={submitHandler} className={styles.search}>
             <FormControl fullWidth className={styles.formStyle} >
-                    <Button type="submit"><SearchIcon/></Button>
+                    <Button disabled={disable} type="submit"><SearchIcon/></Button>
                 <TextField
+                required
                 fullWidth 
                 placeholder="Search..."
                 value = {enteredValue}
-                onChange ={(event) => setEnteredValue(event.target.value)}
+                onChange ={(event) => {
+                    setDisable(false);
+                    setEnteredValue(event.target.value);
+                    
+                }}
                 />
             </FormControl>
         </form>
