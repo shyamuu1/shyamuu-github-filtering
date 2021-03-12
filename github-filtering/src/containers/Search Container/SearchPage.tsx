@@ -67,7 +67,7 @@ console.log(queryStr);
     setCurrentLogin(selectedRepo.owner.login); 
     history.push("detail");
     
-  },[history, queryStr, setCurrentLogin]);
+  },[history, setCurrentLogin]);
 
   //checks if list is still loading and returns a loading animation otherwise displays a list
   let repoList = (isLoading)?<Loader />:<Repolist RepoData={results}  Filters={filters}  sort={isSorted} clicked={selectRepoItemHandler}/>;
