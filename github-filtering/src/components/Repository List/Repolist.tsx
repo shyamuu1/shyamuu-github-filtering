@@ -16,8 +16,9 @@ type RepolistProps = {
 const useStyles = makeStyles({
     listSegment:{
         minHeight: "270px",
-        maxHeight: "500px",
+        maxHeight: "100vh",
         overflowY:"scroll",
+        overflowX:"scroll"
     },
     repoItems:{
         display:"flex",

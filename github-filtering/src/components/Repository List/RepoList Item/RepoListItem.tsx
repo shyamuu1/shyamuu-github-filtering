@@ -1,8 +1,8 @@
 import { Card, CardActions, CardContent, CardHeader, makeStyles, Typography } from '@material-ui/core';
-import StarRateIcon from '@material-ui/icons/StarRate';
-import {People, PeopleOutline} from '@material-ui/icons/';
+import { StarRate, PeopleOutline} from '@material-ui/icons/';
 import React from 'react';
 import {RepoListItem} from '../../../util/types';
+
 
 type RepoItemProps = {
     
@@ -12,7 +12,8 @@ type RepoItemProps = {
 
 const useStyles = makeStyles({
     repoCard:{
-        width:"325px",
+        maxwidth:"325px",
+        width: "325px",
         margin:"5px",
         padding: "8px 8px 2px 8px",
         border: "1px solid white",
@@ -43,7 +44,7 @@ const RepoItem:React.FC<RepoItemProps>= ({repoInfo,selectedRepo}:RepoItemProps) 
                 </Typography>
             </CardContent>
             <CardActions >
-                    <Typography className={styles.repoActions} paragraph><StarRateIcon />: {repoInfo.stargazers_count}</Typography>
+                    <Typography className={styles.repoActions} paragraph><StarRate />: {repoInfo.stargazers_count}</Typography>
                     <Typography className={styles.repoActions} paragraph><PeopleOutline />: {repoInfo.owner.login}</Typography>
             </CardActions>
         </Card>
