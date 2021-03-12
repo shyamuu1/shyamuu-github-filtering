@@ -13,22 +13,20 @@ import ToggleSort from '../../components/Toggle Sort/ToggleSort';
 
 const SearchPage:React.FC = () => {
     const [isMounted, setIsMounted] = useState<boolean>(true);
-    const [queryStr, setQuery] = useState<string>("");
     const [results, setResults] = useState<RepoListItem[]>([]);
     const [filters, setFilters] = useState<LanguageFilter[]>([]);
     const [searching, setSearching] = useState<boolean>(false);
     const history = useHistory();
-    const { setCurrentLogin} = useContext(OwnerContext);
+    const { query, setCurrentQuery, setCurrentLogin} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSorted, setSorted] = useState(false);
     const [error, setError] = useState("");
     
-console.log(queryStr);
 
   useEffect(() => {
     try{
-      if(isMounted && (queryStr !== "")){
-        searchRepoHandler(queryStr)
+      if(isMounted && (query !== "")){
+        searchRepoHandler(query)
       }else{
         return () => {
           setIsMounted(false);
@@ -41,13 +39,13 @@ console.log(queryStr);
 
     }
     
-  }, [isMounted, queryStr]);
+  }, [isMounted, query]);
 
   //queries the Github search API
-  const searchRepoHandler = (query:string) => {
-    setQuery(query);
+  const searchRepoHandler = (queryVal:string) => {
+    setCurrentQuery(queryVal);
     setIsLoading(true);
-    getRequestWithQuery(query)
+    getRequestWithQuery(queryVal)
     .then(data => {
       setSearching(true);
       setResults(data.items);
