@@ -7,7 +7,7 @@ type ToggleSortProps = {
 
 const ToggleSort:React.FC<ToggleSortProps> = ({sorted}:ToggleSortProps) => {
     const [isSorted, setIsSorted] =  useState<boolean>(false);
-    console.log(isSorted);
+    //console.log(isSorted);
     const handleToggleChange = () => {
         sorted(!isSorted);
         setIsSorted(!isSorted);

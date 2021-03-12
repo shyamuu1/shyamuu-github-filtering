@@ -1,4 +1,5 @@
 import { FormControl,FormGroup, FormControlLabel, FormLabel, Checkbox, makeStyles } from '@material-ui/core';
+import ToggleSort from "../Toggle Sort/ToggleSort";
 import React, { useState } from 'react';
 import Filters_arr, { LanguageFilter } from '../../util/types';
 
@@ -24,9 +25,15 @@ const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
     
     const handleChange = (idx:number) =>{
         filters[idx].active = !filters[idx].active
-        setFilters((filters) => [...filters]);
-        updateFilters(filters);
+        let currentFilters = [...filters]
+        setFilters(currentFilters)
+        // let activeFilters:LanguageFilter[] = filters.filter((f) => f.active === true);
+        updateFilters(currentFilters);
     }
+    const ToggleSortHandler = (isSorted:boolean) => {
+        //console.log(isSorted);
+    
+      }
  
     return (
         <section >
@@ -38,6 +45,7 @@ const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
                     ))}
                 </FormGroup>
             </FormControl>
+            <ToggleSort sorted={ToggleSortHandler}/>
         </section>
 
     );

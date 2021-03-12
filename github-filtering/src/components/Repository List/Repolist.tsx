@@ -29,6 +29,7 @@ const Repolist:React.FC<RepolistProps> = ({RepoData, Filters, filtered, clicked}
     const styles = useStyles();
     const activatedFilters:LanguageFilter[] = Filters.filter((f) => f.active === true);
     let data:RepoListItem[] = (!activatedFilters.length)? RepoData:(activatedFilters.length && filtered.length)?filtered:[];
+    //console.log(data)
     if(data.length){
         return (
             <div className={styles.listSegment}>

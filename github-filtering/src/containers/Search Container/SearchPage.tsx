@@ -7,7 +7,6 @@ import {Container} from '@material-ui/core';
 import SearchRepos from "../../components/Search/Search";
 import Filters from "../../components/Filters/Filters";
 import Repolist from "../../components/Repository List/Repolist";
-import ToggleSort from "../../components/Toggle Sort/ToggleSort";
 import { OwnerContext } from '../../context/owner-context';
 
 
@@ -16,15 +15,14 @@ const SearchPage:React.FC = () => {
     const [queryStr, setQuery] = useState<string>("");
     const [results, setResults] = useState<RepoListItem[]>([]);
     const [filterResults, setFilterResults] = useState<RepoListItem[]>([]);
-    const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
+    const [filters, setFilters] = useState<LanguageFilter[]>([]);
     const history = useHistory();
     const { setCurrentOwnerId} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [sorted_repos, setSortedRepos] = useState<RepoListItem[]>([]);
     
-
-    console.log(results)
-    console.log(queryStr)
+console.log(results)
+console.log(sorted_repos)
   //Gets all repositories 
   const getRepoData = useCallback(() => {
     setIsLoading(true);
@@ -54,7 +52,7 @@ const SearchPage:React.FC = () => {
   }, [isMounted, queryStr]);
 
   //queries the Github search API
-  const searchRepoHandler = useCallback((query:string) => {
+  const searchRepoHandler = (query:string) => {
     setQuery(query);
     setIsLoading(true);
     getRequestWithQuery(query)
@@ -63,7 +61,7 @@ const SearchPage:React.FC = () => {
       setResults(data.items);
     });
     
-  },[]);
+  };
   
 
   const getSortedRepos = useCallback(() => {
@@ -74,7 +72,6 @@ const SearchPage:React.FC = () => {
     .then((data) => {
       setIsLoading(false);
       setSortedRepos(data.items);
-      console.log(data.items);
     })
   
 
@@ -85,29 +82,23 @@ const SearchPage:React.FC = () => {
   }, [queryStr])
 
    //filters data by with active filters
-   const filterData = useCallback(() => {
-    const activeFilters = filters.filter((f) => f.active === true);
+   const filterData = useCallback((currentFilters:LanguageFilter[]) => {
+    const activeFilters = currentFilters.filter((f) => f.active === true);
     if(activeFilters.length){
     activeFilters.forEach((f) => {
-      const filtered_results = results.filter((repos) => repos.language === f.name);
+      let filtered_results = results.filter((repos) => repos.language === f.name);
       setFilterResults([...filtered_results])
     })
   }else{
     setFilterResults(results);
   }
-  },[results, filters]);
+  },[results]);
 
-  const ToggleSortHandler = (isSorted:boolean) => {
-    console.log(isSorted);
-    if(isSorted){
-      setResults(sorted_repos)
-    }
-
-  }
+  
   const addFilters = useCallback((allFilters:LanguageFilter[]) => {
     setFilters([...allFilters]);
-    filterData();
-  }, [filterData]);
+    filterData(allFilters);
+  },[filterData]);
 
   const selectRepoItemHandler = useCallback((selectedRepo:RepoListItem) => {
     setCurrentOwnerId(selectedRepo.owner.login); 
@@ -121,7 +112,7 @@ const SearchPage:React.FC = () => {
         <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
         <Filters updateFilters={addFilters}/>
-        <ToggleSort sorted={ToggleSortHandler}/>
+        
         <section>
         {repoList}
         </section>
