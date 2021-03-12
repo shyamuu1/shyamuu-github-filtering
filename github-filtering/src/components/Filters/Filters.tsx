@@ -12,8 +12,9 @@ const useStyles = makeStyles({
 });
 type FilterProps = {
     updateFilters: (currentFilters:LanguageFilter[]) => void;
+    active:boolean;
 }
-const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
+const Filters:React.FC<FilterProps> = ({updateFilters, active}:FilterProps) => {
     const [filters, setFilters] = useState<LanguageFilter[]>(Filters_arr);
     const styles = useStyles();
 
@@ -31,7 +32,7 @@ const Filters:React.FC<FilterProps> = ({updateFilters}:FilterProps) => {
                 <FormLabel component="legend">Filter By:</FormLabel>
                 <FormGroup className={styles.filterGroup}>
                     {filters.map((filter, idx) => (
-                        <FormControlLabel key={idx} control={<Checkbox checked={filter.active} name={filter.name} onChange={() => {handleChange(idx)}} />} label={filter.name}/>
+                        <FormControlLabel key={idx} control={<Checkbox disabled={!active} checked={filter.active} name={filter.name} onChange={() => {handleChange(idx)}} />} label={filter.name}/>
                     ))}
                 </FormGroup>
             </FormControl>

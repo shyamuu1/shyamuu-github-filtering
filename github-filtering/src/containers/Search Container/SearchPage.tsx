@@ -16,12 +16,13 @@ const SearchPage:React.FC = () => {
     const [queryStr, setQuery] = useState<string>("");
     const [results, setResults] = useState<RepoListItem[]>([]);
     const [filters, setFilters] = useState<LanguageFilter[]>([]);
+    const [searching, setSearching] = useState<boolean>(false);
     const history = useHistory();
     const { setCurrentLogin} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSorted, setSorted] = useState(false);
     
-console.log(results)
+console.log(queryStr);
 
   useEffect(() => {
     try{
@@ -46,9 +47,10 @@ console.log(results)
     setIsLoading(true);
     getRequestWithQuery(query)
     .then(data => {
-      setIsLoading(false);
+      setSearching(true);
       setResults(data.items);
     });
+    setIsLoading(false);
     
   };
   //retrieves toggle switch's boolean status which is used to sort data or not
@@ -65,7 +67,7 @@ console.log(results)
     setCurrentLogin(selectedRepo.owner.login); 
     history.push("detail");
     
-  },[history, setCurrentLogin]);
+  },[history, queryStr, setCurrentLogin]);
 
   //checks if list is still loading and returns a loading animation otherwise displays a list
   let repoList = (isLoading)?<Loader />:<Repolist RepoData={results}  Filters={filters}  sort={isSorted} clicked={selectRepoItemHandler}/>;
@@ -73,8 +75,8 @@ console.log(results)
     return(
         <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
-        <Filters updateFilters={addFilters}/>
-        <ToggleSort sorted={ToggleSortHandler} />
+        <Filters updateFilters={addFilters} active={searching}/>
+        <ToggleSort sorted={ToggleSortHandler} active={searching}/>
         <section>
         {repoList}
         </section>

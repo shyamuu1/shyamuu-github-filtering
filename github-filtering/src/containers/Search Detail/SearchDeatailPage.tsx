@@ -125,7 +125,7 @@ const SearchDetailPage:React.FC = () => {
     },[ isMounted])
 
     const goBackButtonHandler = () => {
-        history.push("/");
+        history.goBack();
     }
     
     let userFragment = (!isLoading)? (

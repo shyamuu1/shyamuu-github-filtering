@@ -32,7 +32,7 @@ const SearchRepos:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
     const submitHandler = (event:SyntheticEvent) => {
         event.preventDefault();
         searchQuery(enteredValue);
-        setEnteredValue("");
+        //setEnteredValue("");
 
     }
 
