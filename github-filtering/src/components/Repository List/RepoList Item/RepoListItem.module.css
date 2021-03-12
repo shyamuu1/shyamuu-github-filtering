@@ -1,0 +1,11 @@
+.repoCard{
+    width:325px;
+    margin:5px;
+    border-radius: 3px;
+    background-color:white;
+    background: linear-gradient(135deg, white 50%, rgba(teal, 0.05) 100%);
+    padding: 8px 8px 2px 8px;
+    border: 1px solid white;
+    outline: 1px solid #ddd;
+
+}
