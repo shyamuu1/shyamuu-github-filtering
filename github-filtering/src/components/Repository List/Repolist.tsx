@@ -7,6 +7,8 @@ type RepolistProps = {
     RepoData:RepoListItem[];
     Filters:LanguageFilter[];
     filtered:RepoListItem[];
+    sortedData:RepoListItem[];
+    sort:boolean;
     clicked: (selectedRepo:RepoListItem) => void;
 
 }
@@ -25,11 +27,34 @@ const useStyles = makeStyles({
     }
 })
 
-const Repolist:React.FC<RepolistProps> = ({RepoData, Filters, filtered, clicked}:RepolistProps) => {
+const Repolist:React.FC<RepolistProps> = ({RepoData, sortedData, Filters, filtered, sort, clicked}:RepolistProps) => {
     const styles = useStyles();
+    const sortMyData:RepoListItem[] = sortedData.slice(0).sort((a,b) => b.stargazers_count -a.stargazers_count);
     const activatedFilters:LanguageFilter[] = Filters.filter((f) => f.active === true);
-    let data:RepoListItem[] = (!activatedFilters.length)? RepoData:(activatedFilters.length && filtered.length)?filtered:[];
-    //console.log(data)
+    //let data:RepoListItem[] = (!activatedFilters.length)? RepoData:(activatedFilters.length && filtered.length)?filtered:[];
+
+    const getData = ():RepoListItem[] => {
+        let currentData:RepoListItem[] = [];
+        if(activatedFilters.length && sort === true){
+            activatedFilters.forEach((filt) => {
+                 currentData= sortMyData.filter((val) => val.language === filt.name);
+            })
+        }
+        else if(!activatedFilters.length && sort === true){
+            currentData= sortMyData
+        }
+        else if(activatedFilters.length && sort === false){
+            activatedFilters.forEach((filt) => {
+                 currentData = RepoData.filter((val) => val.language === filt.name);
+            })
+        }
+        else{
+            currentData = RepoData;
+        }
+        return currentData;
+    }
+    let data =  getData()
+
     if(data.length){
         return (
             <div className={styles.listSegment}>

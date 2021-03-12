@@ -8,6 +8,7 @@ import SearchRepos from "../../components/Search/Search";
 import Filters from "../../components/Filters/Filters";
 import Repolist from "../../components/Repository List/Repolist";
 import { OwnerContext } from '../../context/owner-context';
+import ToggleSort from '../../components/Toggle Sort/ToggleSort';
 
 
 const SearchPage:React.FC = () => {
@@ -19,6 +20,7 @@ const SearchPage:React.FC = () => {
     const history = useHistory();
     const { setCurrentOwnerId} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSorted, setSorted] = useState(false);
     const [sorted_repos, setSortedRepos] = useState<RepoListItem[]>([]);
     
 console.log(results)
@@ -37,7 +39,7 @@ console.log(sorted_repos)
     try{
       if(isMounted && (queryStr !== "")){
         searchRepoHandler(queryStr)
-        getSortedRepos();
+        //getSortedRepos();
       }else{
         return () => {
           setIsMounted(false);
@@ -59,6 +61,7 @@ console.log(sorted_repos)
     .then(data => {
       setIsLoading(false);
       setResults(data.items);
+      setSortedRepos(data.items);
     });
     
   };
@@ -83,6 +86,7 @@ console.log(sorted_repos)
 
    //filters data by with active filters
    const filterData = useCallback((currentFilters:LanguageFilter[]) => {
+     
     const activeFilters = currentFilters.filter((f) => f.active === true);
     if(activeFilters.length){
     activeFilters.forEach((f) => {
@@ -94,7 +98,9 @@ console.log(sorted_repos)
   }
   },[results]);
 
-  
+  const ToggleSortHandler = (activateSort:boolean) => {
+    setSorted(activateSort);
+  }
   const addFilters = useCallback((allFilters:LanguageFilter[]) => {
     setFilters([...allFilters]);
     filterData(allFilters);
@@ -106,13 +112,13 @@ console.log(sorted_repos)
     
   },[history, setCurrentOwnerId]);
 
-  let repoList = (isLoading)?<Loader />:<Repolist RepoData={results} Filters={filters} filtered={filterResults} clicked={selectRepoItemHandler}/>;
+  let repoList = (isLoading)?<Loader />:<Repolist RepoData={results} sortedData={sorted_repos} Filters={filters} filtered={filterResults} sort={isSorted} clicked={selectRepoItemHandler}/>;
 
     return(
         <Container className="container">
         <SearchRepos searchQuery={searchRepoHandler} />
         <Filters updateFilters={addFilters}/>
-        
+        <ToggleSort sorted={ToggleSortHandler} />
         <section>
         {repoList}
         </section>
