@@ -3,12 +3,7 @@ The github-filtering app serves as a tool that allows users to search github api
 The purpose of this tool is to learn how to filter data from a 3rd party api using React hooks. 
 
 # Requirements
-1. Node js and React.js installed
-2. Query results from github api
-3. Display results 
-4. Sort Results by (best match) and star count
-5. Repository Detail page
-6. Responsive design
+Node js and React.js must be installed
 
 # Implementation
 Clone or download zip file from Repository
