@@ -8,6 +8,9 @@ const useStyles = makeStyles({
         flexDirection:"row",
         flexWrap:"wrap",
         padding: "8px"
+    },
+    filterInactive:{
+        display:"none"
     }
 });
 type FilterProps = {
@@ -30,9 +33,9 @@ const Filters:React.FC<FilterProps> = ({updateFilters, active}:FilterProps) => {
         <section >
             <FormControl component="fieldset">
                 <FormLabel component="legend">Filter By:</FormLabel>
-                <FormGroup className={styles.filterGroup}>
+                <FormGroup className={(active)?styles.filterGroup:styles.filterInactive}>
                     {filters.map((filter, idx) => (
-                        <FormControlLabel key={idx} control={<Checkbox disabled={!active} checked={filter.active} name={filter.name} onChange={() => {handleChange(idx)}} />} label={filter.name}/>
+                        <FormControlLabel key={idx} control={<Checkbox checked={filter.active} name={filter.name} onChange={() => {handleChange(idx)}} />} label={filter.name}/>
                     ))}
                 </FormGroup>
             </FormControl>

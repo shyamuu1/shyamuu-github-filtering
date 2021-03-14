@@ -1,6 +1,7 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+.bgImg{
+    background: url(https://www.nicepng.com/png/detail/183-1838159_exploring-github-github-octocat.png) no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    overflow: hidden;
+    border-radius: 50%;
+}  
