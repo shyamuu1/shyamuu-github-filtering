@@ -20,34 +20,6 @@ const default_Owner:Owner = {
     followers: 0,
     following: 0
 }
-// const useStyles = makeStyles({
-//     searchDetailContent:{
-//         display:"flex",
-//         flexDirection:"row",
-//         flexWrap:"wrap",
-//         paddingTop:"16px",
-//         paddingLeft:"8px",
-//         justifyContent:"space-evenly"
-//     },
-//     OrgsandRepoContent:{
-//         display:"flex",
-//         flexDirection:"column",
-        
-//     },
-//     BackButton:{
-//         display:"flex",
-//         padding:"8px",
-//         width: "100%",
-//         flexDirection:"row",
-//         justifyContent:"center"
-//     },
-//     searchDetailPage: {
-//         display:"flex",
-//         flexDirection:"column",
-//         justifyContent:"center",
-//         alignContent:"center",
-//     }
-// })
 
 const SearchDetailPage:React.FC = () => {
     const {loginName} = useContext(OwnerContext);

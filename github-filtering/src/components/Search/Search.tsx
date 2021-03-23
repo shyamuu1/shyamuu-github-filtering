@@ -2,23 +2,6 @@ import { FormControl, TextField, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import React, {SyntheticEvent, useState} from 'react';
 import "./Search.css";
-// const useStyles = makeStyles({
-//     search:{
-//         display:"flex",
-//         paddingTop: "8px",
-//         flexWrap:"wrap",
-//         justifyContent:"center",
-//         alignItems:"center"
-//     },
-//     formStyle:{
-//         width: "80%",
-//         border: "1px solid black",
-//         borderRadius: "5px",
-//         flexDirection:"row",
-//         justifyContent:"center",
-//         alignItems:"center"
-//     }
-// });
 
 type SearchProps = {
     searchQuery: (query:string) => void;

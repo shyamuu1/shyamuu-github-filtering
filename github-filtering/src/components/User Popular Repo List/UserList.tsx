@@ -3,13 +3,6 @@ import {Typography,Divider, List, ListItemIcon, ListItem, ListItemText} from "@m
 import GithubIcon from "@material-ui/icons/GitHub";
 import { RepoListItem} from "../../util/types";
 import "./UserList.css";
-// const useStyles = makeStyles({
-//     ListStyle:{
-//         display:"flex",
-//         flexDirection:"column",
-//         paddingTop:"16px"
-//     }
-// })
 
 type UserListProps = {
     repos:RepoListItem[];

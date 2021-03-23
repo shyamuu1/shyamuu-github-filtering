@@ -8,45 +8,6 @@ type UserDetailProps = {
     
 }
 
-// const useStyles = makeStyles({
-//     userDetail: {
-//         display:"flex",
-//         flexDirection:"column",
-//         width:"500px"
-//     },
-//     bullet: {
-//         display: 'inline-block',
-//         margin: '0 2px',
-//         transform: 'scale(0.8)',
-//       },
-//     userContent:{
-//         display:"flex",
-//         flexDirection:"row",
-//         flexWrap:"wrap" 
-//     }, 
-//     AvatarStyle:{
-//         maxHeight:"260px",
-//         maxWidth:"260px",
-//         minWidth:"190px",
-//         minHeight:"190px"
-//     },
-//     header:{
-//         display:"flex",
-//         flexDirection:"column",
-//         justifyContent:"center"
-//     },
-//     customCardStyle:{
-//         border:"none",
-//         boxShadow:"none"
-//     },
-//     userDetailActions:{
-//         display:"flex",
-//         flexDirection:"row",
-//         width:"100%",
-//         justifyContent:"center"
-//     }
-    
-// })
 
 const UserDetail:React.FC<UserDetailProps> = ({currentOwner}:UserDetailProps) => {
     
