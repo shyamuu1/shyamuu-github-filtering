@@ -9,7 +9,7 @@ import Filters from "../../components/Filters/Filters";
 import Repolist from "../../components/Repository List/Repolist";
 import { OwnerContext } from '../../context/owner-context';
 import ToggleSort from '../../components/Toggle Sort/ToggleSort';
-import "./SearchPage.css";
+
 
 
 

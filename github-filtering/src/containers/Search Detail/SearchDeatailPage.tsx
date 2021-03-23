@@ -1,4 +1,4 @@
-import { Button, Container, Divider, makeStyles, Typography } from '@material-ui/core';
+import { Button, Container, Divider, Typography } from '@material-ui/core';
 import React, { useContext, useEffect,useState,useCallback } from 'react';
 import UserDetail from '../../components/User Detail/UserDetail';
 import { OwnerContext } from '../../context/owner-context';
@@ -8,6 +8,7 @@ import Userlist from '../../components/User Popular Repo List/UserList';
 import Loader from "../../UI/Spinner/Loader";
 import Organizations from '../../components/Organizations/Organizations';
 import { useHistory } from 'react-router';
+import "./SearchDetailPage.css";
 
 const default_Owner:Owner = {
     node_id: "",
@@ -19,34 +20,34 @@ const default_Owner:Owner = {
     followers: 0,
     following: 0
 }
-const useStyles = makeStyles({
-    searchDetailContent:{
-        display:"flex",
-        flexDirection:"row",
-        flexWrap:"wrap",
-        paddingTop:"16px",
-        paddingLeft:"8px",
-        justifyContent:"space-evenly"
-    },
-    OrgsandRepoContent:{
-        display:"flex",
-        flexDirection:"column",
+// const useStyles = makeStyles({
+//     searchDetailContent:{
+//         display:"flex",
+//         flexDirection:"row",
+//         flexWrap:"wrap",
+//         paddingTop:"16px",
+//         paddingLeft:"8px",
+//         justifyContent:"space-evenly"
+//     },
+//     OrgsandRepoContent:{
+//         display:"flex",
+//         flexDirection:"column",
         
-    },
-    BackButton:{
-        display:"flex",
-        padding:"8px",
-        width: "100%",
-        flexDirection:"row",
-        justifyContent:"center"
-    },
-    searchDetailPage: {
-        display:"flex",
-        flexDirection:"column",
-        justifyContent:"center",
-        alignContent:"center",
-    }
-})
+//     },
+//     BackButton:{
+//         display:"flex",
+//         padding:"8px",
+//         width: "100%",
+//         flexDirection:"row",
+//         justifyContent:"center"
+//     },
+//     searchDetailPage: {
+//         display:"flex",
+//         flexDirection:"column",
+//         justifyContent:"center",
+//         alignContent:"center",
+//     }
+// })
 
 const SearchDetailPage:React.FC = () => {
     const {loginName} = useContext(OwnerContext);
@@ -57,7 +58,6 @@ const SearchDetailPage:React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState(null);
     const history = useHistory();
-    const styles =  useStyles()
     
     console.log(user);
     
@@ -135,7 +135,7 @@ const SearchDetailPage:React.FC = () => {
     let userFragment = (!isLoading && !error)? (
         <React.Fragment>
             <UserDetail currentOwner={user}/>
-            <section className={styles.OrgsandRepoContent}>
+            <section className="OrgsandRepoCount">
             <Typography variant="h6">Organizations</Typography>
             <Divider />
             <Organizations orgs={orgs} />
@@ -145,9 +145,9 @@ const SearchDetailPage:React.FC = () => {
     ):<Loader />
     return(
         <section>
-        <Container className={styles.searchDetailContent}>
+        <Container className="searchDetailContent">
             {userFragment}
-            <div className={styles.BackButton}>
+            <div className="BackButton">
             <Button style={{maxWidth:"300px"}} fullWidth variant="outlined" color="primary" onClick={goBackButtonHandler} >Go Back to Seach</Button>
             </div>
         </Container>  

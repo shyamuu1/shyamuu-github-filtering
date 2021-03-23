@@ -1,0 +1,5 @@
+.ListStyle{
+    display:flex;
+    flex-direction: column;
+    padding-top: 16px;
+}

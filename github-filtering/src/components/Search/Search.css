@@ -1,0 +1,18 @@
+.search{
+    display: flex;
+    padding-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.formStyle{
+    width: 80%;
+    border: 1px solid black;
+    border-radius: 5px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
