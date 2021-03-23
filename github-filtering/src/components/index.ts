@@ -5,6 +5,6 @@ import Repolist from "./Repository List/Repolist";
 import Search from "./Search/Search";
 import ToggleSort from "./Toggle Sort/ToggleSort";
 import UserDetail from "./User Detail/UserDetail";
-import UserList from "./User Popular Repo List/UserList";
+import Userlist from "./User Popular Repo List/UserList";
 
-export {Filters, Layout, Organizations, Repolist, Search, ToggleSort, UserDetail, UserList};
+export {Filters, Layout, Organizations, Repolist, Search, ToggleSort, UserDetail, Userlist};

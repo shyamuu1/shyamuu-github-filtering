@@ -7,7 +7,7 @@ type SearchProps = {
     searchQuery: (query:string) => void;
 }
 
-const SearchRepos:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
+const Search:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
     
     const [enteredValue, setEnteredValue] = useState<string>("");
     const [disable,setDisable] = useState<boolean>(true);
@@ -23,7 +23,7 @@ const SearchRepos:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
 
 
     return (
-        <form onSubmit={submitHandler} className="search">
+        <form onSubmit={submitHandler} className="searchRepos">
             <FormControl fullWidth className="formStyle" >
                     <Button disabled={disable} type="submit"><SearchIcon/></Button>
                 <TextField
@@ -45,4 +45,4 @@ const SearchRepos:React.FC<SearchProps> = ({searchQuery}:SearchProps) => {
 
 
 
-export default SearchRepos;
+export default Search;

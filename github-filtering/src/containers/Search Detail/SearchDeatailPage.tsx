@@ -1,10 +1,9 @@
 import { Button, Container, Divider, Typography } from '@material-ui/core';
 import React, { useContext, useEffect,useState,useCallback } from 'react';
-import UserDetail from '../../components/User Detail/UserDetail';
 import { OwnerContext } from '../../context/owner-context';
 import { getRequest, getSortRequest} from '../../util/apiService';
 import { Owner, RepoListItem, Orgs } from '../../util/types';
-import Userlist from '../../components/User Popular Repo List/UserList';
+import {Userlist, UserDetail} from '../../components';
 import Loader from "../../UI/Spinner/Loader";
 import Organizations from '../../components/Organizations/Organizations';
 import { useHistory } from 'react-router';

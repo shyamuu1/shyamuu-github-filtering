@@ -4,11 +4,11 @@ import {useHistory}from "react-router-dom";
 import {  getRequestWithQuery } from "../../util/apiService";
 import  {RepoListItem, LanguageFilter} from "../../util/types";
 import {Container} from '@material-ui/core';
-import SearchRepos from "../../components/Search/Search";
-import Filters from "../../components/Filters/Filters";
-import Repolist from "../../components/Repository List/Repolist";
+import {Search, Filters, Repolist, ToggleSort} from "../../components";
+// import Filters from "../../components/Filters/Filters";
+// import Repolist from "../../components/Repository List/Repolist";
 import { OwnerContext } from '../../context/owner-context';
-import ToggleSort from '../../components/Toggle Sort/ToggleSort';
+// import ToggleSort from '../../components/Toggle Sort/ToggleSort';
 
 
 
@@ -76,7 +76,7 @@ const SearchPage:React.FC = () => {
   let content = (error)?<p>{error}</p>:repoList;
     return(
         <Container className="container">
-        <SearchRepos searchQuery={searchRepoHandler} />
+        <Search searchQuery={searchRepoHandler} />
         <Filters updateFilters={addFilters} active={searching}/>
         <ToggleSort sorted={ToggleSortHandler} active={searching}/>
         <section>
