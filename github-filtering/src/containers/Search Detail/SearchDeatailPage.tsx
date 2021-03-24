@@ -7,6 +7,7 @@ import {Userlist, UserDetail} from '../../components';
 import Loader from "../../UI/Spinner/Loader";
 import Organizations from '../../components/Organizations/Organizations';
 import { useHistory } from 'react-router';
+import {useRepo} from "../../hooks/useRepo";
 import "./SearchDetailPage.css";
 
 const default_Owner:Owner = {
@@ -23,8 +24,9 @@ const default_Owner:Owner = {
 const SearchDetailPage:React.FC = () => {
     const {loginName} = useContext(OwnerContext);
     const [user, setUser] = useState<Owner>(default_Owner);
-    const [followers, setFollowers] = useState<RepoListItem[]>([]);
-    const [orgs, setOrgs] = useState<Orgs[]>([]);
+    const {orgs, getOrgs, topRepos, getUserTopRepos} = useRepo();
+    //const [followers, setFollowers] = useState<RepoListItem[]>([]);
+    //const [orgs, setOrgs] = useState<Orgs[]>([]);
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState(null);
@@ -34,15 +36,16 @@ const SearchDetailPage:React.FC = () => {
     
     // gets orgnaizations affiliated with user
     const getOrganizations = useCallback(() => {
-        const orgs_url:string = `https://api.github.com/users/${loginName}/orgs`;
+        //const orgs_url:string = `https://api.github.com/users/${loginName}/orgs`;
         setIsLoading(true);
-        getRequest(orgs_url)
-        .then((res) =>  {
+         getOrgs(loginName);
+        // getRequest(orgs_url)
+        // .then((res) =>  {
             
-            setOrgs(res);
-        })
+        //     setOrgs(res);
+        // })
         setIsLoading(false);
-    }, [loginName])
+    }, [loginName, getOrgs])
 
     //get user by loginName or username
     const getUser = useCallback(() => {
@@ -72,14 +75,15 @@ const SearchDetailPage:React.FC = () => {
 
     //gets repos affiliated with current user
     const getUsersRepos = useCallback(() => {
-        let followers_url:string = `https://api.github.com/users/${loginName}/repos`;
+        //const userRepos_url:string = `https://api.github.com/users/${loginName}/repos`;
         setIsLoading(true);
-        getSortRequest(followers_url,"stars")
-        .then((res) => {
-            setFollowers(res);
-        });
+        getUserTopRepos(loginName);
+        // getSortRequest(userRepos_url,"stars")
+        // .then((res) => {
+        //     setFollowers(res);
+        // });
         setIsLoading(false);
-    },[loginName])
+    },[loginName, getUserTopRepos])
 
     
 
@@ -110,7 +114,7 @@ const SearchDetailPage:React.FC = () => {
             <Typography variant="h6">Organizations</Typography>
             <Divider />
             <Organizations orgs={orgs} />
-            <Userlist repos={followers}/>
+            <Userlist repos={topRepos}/>
             </section>
         </React.Fragment>
     ):<Loader />
