@@ -5,20 +5,18 @@ import {  getRequestWithQuery } from "../../util/apiService";
 import  {RepoListItem, LanguageFilter} from "../../util/types";
 import {Container} from '@material-ui/core';
 import {Search, Filters, Repolist, ToggleSort} from "../../components";
-// import Filters from "../../components/Filters/Filters";
-// import Repolist from "../../components/Repository List/Repolist";
 import { OwnerContext } from '../../context/owner-context';
-// import ToggleSort from '../../components/Toggle Sort/ToggleSort';
-
+import {useRepo} from "../../hooks/useRepo";
 
 
 
 const SearchPage:React.FC = () => {
     const [isMounted, setIsMounted] = useState<boolean>(true);
-    const [results, setResults] = useState<RepoListItem[]>([]);
+    //const [results, setResults] = useState<RepoListItem[]>([]);
     const [filters, setFilters] = useState<LanguageFilter[]>([]);
-    const [searching, setSearching] = useState<boolean>(false);
+    //const [searching, setSearching] = useState<boolean>(false);
     const history = useHistory();
+    const {results, searchRepos, searching} = useRepo();
     const { query, setCurrentQuery, setCurrentLogin} = useContext(OwnerContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSorted, setSorted] = useState(false);
@@ -44,17 +42,13 @@ const SearchPage:React.FC = () => {
   }, [isMounted, query]);
 
   //queries the Github search API
-  const searchRepoHandler = (queryVal:string) => {
+  const searchRepoHandler = useCallback((queryVal:string) => {
     setCurrentQuery(queryVal);
     setIsLoading(true);
-    getRequestWithQuery(queryVal)
-    .then(data => {
-      setSearching(true);
-      setResults(data.items);
-    });
+    searchRepos(queryVal);
     setIsLoading(false);
-    
-  };
+  },[searchRepos]);
+
   //retrieves toggle switch's boolean status which is used to sort data or not
   const ToggleSortHandler = (activateSort:boolean) => {
     setSorted(activateSort);
