@@ -1,8 +1,8 @@
 import { Button, Container, Divider, Typography } from '@material-ui/core';
 import React, { useContext, useEffect,useState,useCallback } from 'react';
 import { OwnerContext } from '../../context/owner-context';
-import { getRequest, getSortRequest} from '../../util/apiService';
-import { Owner, RepoListItem, Orgs } from '../../util/types';
+import { getRequest} from '../../util/apiService';
+import { Owner} from '../../util/types';
 import {Userlist, UserDetail} from '../../components';
 import Loader from "../../UI/Spinner/Loader";
 import Organizations from '../../components/Organizations/Organizations';
@@ -25,8 +25,6 @@ const SearchDetailPage:React.FC = () => {
     const {loginName} = useContext(OwnerContext);
     const [user, setUser] = useState<Owner>(default_Owner);
     const {orgs, getOrgs, topRepos, getUserTopRepos} = useRepo();
-    //const [followers, setFollowers] = useState<RepoListItem[]>([]);
-    //const [orgs, setOrgs] = useState<Orgs[]>([]);
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState(null);
@@ -36,14 +34,8 @@ const SearchDetailPage:React.FC = () => {
     
     // gets orgnaizations affiliated with user
     const getOrganizations = useCallback(() => {
-        //const orgs_url:string = `https://api.github.com/users/${loginName}/orgs`;
         setIsLoading(true);
          getOrgs(loginName);
-        // getRequest(orgs_url)
-        // .then((res) =>  {
-            
-        //     setOrgs(res);
-        // })
         setIsLoading(false);
     }, [loginName, getOrgs])
 
@@ -75,13 +67,8 @@ const SearchDetailPage:React.FC = () => {
 
     //gets repos affiliated with current user
     const getUsersRepos = useCallback(() => {
-        //const userRepos_url:string = `https://api.github.com/users/${loginName}/repos`;
         setIsLoading(true);
         getUserTopRepos(loginName);
-        // getSortRequest(userRepos_url,"stars")
-        // .then((res) => {
-        //     setFollowers(res);
-        // });
         setIsLoading(false);
     },[loginName, getUserTopRepos])
 

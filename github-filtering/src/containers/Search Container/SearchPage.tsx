@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useCallback, useContext} from 'react';
 import Loader from "../../UI/Spinner/Loader";
 import {useHistory}from "react-router-dom";
-import {  getRequestWithQuery } from "../../util/apiService";
 import  {RepoListItem, LanguageFilter} from "../../util/types";
 import {Container} from '@material-ui/core';
 import {Search, Filters, Repolist, ToggleSort} from "../../components";
@@ -12,9 +11,7 @@ import {useRepo} from "../../hooks/useRepo";
 
 const SearchPage:React.FC = () => {
     const [isMounted, setIsMounted] = useState<boolean>(true);
-    //const [results, setResults] = useState<RepoListItem[]>([]);
     const [filters, setFilters] = useState<LanguageFilter[]>([]);
-    //const [searching, setSearching] = useState<boolean>(false);
     const history = useHistory();
     const {results, searchRepos, searching} = useRepo();
     const { query, setCurrentQuery, setCurrentLogin} = useContext(OwnerContext);
