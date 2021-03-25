@@ -26,3 +26,28 @@
     justify-content: center;
     align-content: center;
 }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .searchDetailContent{
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+ 
+
+
+@media screen and (min-width: 1400px) {
+    .searchDetailContent{
+      width: 1370px;
+    }
+  }
+  @media screen and (min-width: 1600px) {
+    .searchDetailContent {
+      width: 1570px;
+    }
+  }
+  @media screen and (min-width: 1900px) {
+    .searchDetailContent {
+      width: 1870px;
+    }
+  }

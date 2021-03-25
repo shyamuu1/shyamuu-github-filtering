@@ -1,36 +1,25 @@
 import { Button, Container, Divider, Typography } from '@material-ui/core';
-import React, { useContext, useEffect,useState,useCallback } from 'react';
+import React, { useContext, useEffect,useState,useCallback} from 'react';
 import { OwnerContext } from '../../context/owner-context';
-import { getRequest} from '../../util/apiService';
-import { Owner} from '../../util/types';
 import {Userlist, UserDetail} from '../../components';
 import Loader from "../../UI/Spinner/Loader";
 import Organizations from '../../components/Organizations/Organizations';
 import { useHistory } from 'react-router';
-import {useRepo} from "../../hooks/useRepo";
+import {useRepo, useOwner} from "../../hooks";
 import "./SearchDetailPage.css";
 
-const default_Owner:Owner = {
-    node_id: "",
-    id: 0,
-    login: "",
-    bio:"",
-    html_url: "",
-    avatar_url: "",
-    followers: 0,
-    following: 0
-}
+
 
 const SearchDetailPage:React.FC = () => {
     const {loginName} = useContext(OwnerContext);
-    const [user, setUser] = useState<Owner>(default_Owner);
+    const {user, getUserByUsername} = useOwner();
     const {orgs, getOrgs, topRepos, getUserTopRepos} = useRepo();
     const [isMounted, setIsMounted] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState(null);
     const history = useHistory();
     
-    console.log(user);
+    
     
     // gets orgnaizations affiliated with user
     const getOrganizations = useCallback(() => {
@@ -41,28 +30,10 @@ const SearchDetailPage:React.FC = () => {
 
     //get user by loginName or username
     const getUser = useCallback(() => {
-        let user_url:string = `https://api.github.com/users/${loginName}`
         setIsLoading(true);
-        getRequest(user_url)
-        .then((res) => {
-            
-            setUser((currentState) => {
-                return {
-                    ...currentState,
-                    node_id:res.node_id,
-                    id:res.id,
-                    login: res.login,
-                    bio: res.bio,
-                    html_url: res.html_url,
-                    avatar_url: res.avatar_url,
-                    followers: res.followers,
-                    following: res.following
-
-                }
-            })
-        });
+        getUserByUsername(loginName);
         setIsLoading(false);
-    },[loginName])
+    },[loginName, getUserByUsername])
 
 
     //gets repos affiliated with current user
